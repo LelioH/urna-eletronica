@@ -87,8 +87,8 @@ export default function Home() {
         style={{ boxShadow: '-32px -8px 3px 1px rgba(107, 114, 128, 0.5) inset' }}
       >
         <div className="border-gray-400 border-2 border-b-0 rounded-sm">
-          <div className="bg-black h-[436px] px-8 py-4">
-            <div className="bg-slate-100 w-full h-full p-2 flex flex-col items-center">
+          <div className="bg-black h-[436px] px-8 py-4 sm:px-4">
+            <div className="bg-slate-100 w-full h-full flex flex-col items-center">
               {isentVote ? (
                 <React.Fragment>
                   <div className="flex items-center justify-center w-full h-full">
@@ -111,26 +111,32 @@ export default function Home() {
                 </div>
               ) : (
                 <React.Fragment>
-                  <div className="flex flex-row w-full h-full justify-between p-2 sm:gap-4">
+                  <div className="flex flex-row w-full h-full justify-between p-2 sm:gap-4 sm:text-center sm:justify-center sm:p-1">
                     <div className="flex flex-col justify-evenly sm:justify-between">
                       {inputValues && inputValues.length === 5 && (
-                        <h1 className="text-black text-lg font-[Inter] sm:text-sm">SEU VOTO PARA</h1>
+                        <h1 className="text-black text-lg font-[Inter] sm:text-xs">SEU VOTO PARA</h1>
                       )}
-                      <h1 className="text-black text-3xl font-[Inter] sm:text-lg sm:font-semibold">VEREADORA</h1>
+                      <h1
+                        className={`text-black text-3xl font-[Inter] sm:text-lg sm:mt-${
+                          inputValues.length === 5 ? '[180px]' : '[200px]'
+                        }`}
+                      >
+                        VEREADORA
+                      </h1>
                       <div>
-                        <label className="text-black text-lg font-[Inter] sm:text-sm">NÚMERO:</label>
+                        <label className="text-black text-lg font-[Inter] sm:text-xs">NÚMERO:</label>
                         <div className="flex flex-row gap-2 sm:gap-1">{renderInputs()}</div>
                       </div>
                       {inputValues && inputValues.length === 5 && (
                         <React.Fragment>
                           <div>
-                            <h1 className="text-black text-lg font-[Inter] sm:text-sm">NOME: LARA CARVALHO</h1>
-                            <h1 className="text-black text-lg font-[Inter] sm:text-sm">PARTIDO: MEU CORAÇÃO</h1>
+                            <h1 className="text-black text-lg font-[Inter] sm:text-xs">NOME: LARA CARVALHO</h1>
+                            <h1 className="text-black text-lg font-[Inter] sm:text-xs">PARTIDO: MEU CORAÇÃO</h1>
                           </div>
                         </React.Fragment>
                       )}
                     </div>
-                    <div className="bg-slate-50 w-[200px] h-[240px] sm:absolute sm:top-[60px] sm:right-[78px] sm:w-[130px] sm:h-[170px] sm:p-0">
+                    <div className="bg-slate-50 w-[200px] h-[240px] sm:absolute sm:top-[80px] sm:right-[130px] sm:w-[130px] sm:h-[170px] sm:p-0">
                       {inputValues && inputValues.length === 5 && (
                         <img
                           src={Lara}
@@ -145,15 +151,15 @@ export default function Home() {
 
                   {inputValues && inputValues.length === 5 && (
                     <React.Fragment>
-                      <hr className="border border-black w-full mb-2" />
-                      <div className="self-start">
-                        <h1 className="text-black text-lg font-[Inter] sm:text-sm">APERTE A TECLA:</h1>
+                      <hr className="border border-black w-full mb-2 sm:mb-0 " />
+                      <div className="self-start w-full sm:text-center sm:p-1">
+                        <h1 className="text-black text-lg font-[Inter] sm:text-xs">APERTE A TECLA:</h1>
                         {inputValues.map((num) => Math.floor(num)).join('') === '12123' && (
-                          <h1 className="text-black text-lg font-[Inter] sm:text-sm">
+                          <h1 className="text-black text-lg font-[Inter] sm:text-xs">
                             <span className="text-green-500">VERDE</span> para CONFIRMAR este voto
                           </h1>
                         )}
-                        <h1 className="text-black text-lg font-[Inter] sm:text-sm">
+                        <h1 className="text-black text-lg font-[Inter] sm:text-xs">
                           <span className="text-red-500">VERMELHO</span> para REINICIAR este voto
                         </h1>
                       </div>
@@ -167,7 +173,7 @@ export default function Home() {
             <div className="flex flex-wrap items-center max-h-[224px] sm:hidden">
               <img src={TSH} width={209} height={132} alt="JH" />
             </div>
-            <div className="max-w-[270px] max-h-[224px] flex flex-wrap flex-row items-center justify-center gap-x-4 gap-y-3 p-2 sm:max-w-[360px]">
+            <div className="max-w-[270px] max-h-[224px] flex flex-wrap flex-row items-center justify-center gap-x-3 gap-y-3 p-2 sm:w-full sm:p-0">
               {numbers.map((number, index) => (
                 <DialerBtn
                   key={index}
@@ -177,17 +183,17 @@ export default function Home() {
                 />
               ))}
             </div>
-            <div className="flex flex-col gap-y-4 py-3 mb-24 px-9 sm:flex-row sm:mb-4 sm:gap-x-4 sm:gap-y-3 sm:items-end">
+            <div className="flex flex-col gap-y-4 py-3 mb-24 px-9 sm:flex-row sm:mb-4 sm:gap-x-2 sm:gap-y-3 sm:items-end">
               <button
                 disabled={inputValues.length === 5}
                 onClick={isentVoteFnc}
-                className="bg-white w-24 h-9 rounded-lg text-left justify-center pb-1 pl-2 active:pb-0 active:pl-3 btn-shadow-white transition-all cursor-pointer sm:w-24 sm:h-12 sm:pl-2 sm:active:pl-3"
+                className="bg-white w-24 h-9 rounded-lg text-left justify-center pb-1 pl-2 active:pb-0 active:pl-3 btn-shadow-white transition-all cursor-pointer sm:w-[84px] sm:h-12 sm:pl-2 sm:active:pl-3"
               >
                 <h1 className="text-black text-sm font-[Inter] leading-none">BRANCO ⠃⠗⠁⠝⠉⠕</h1>
               </button>
               <button
                 onClick={emptyInput}
-                className="bg-red-400 w-24 h-9 rounded-lg text-left justify-center pb-1 pl-2 active:pb-0 active:pl-3 btn-shadow-correct transition-all sm:w-24 sm:h-12 sm:pl-2 sm:active:pl-3"
+                className="bg-red-400 w-24 h-9 rounded-lg text-left justify-center pb-1 pl-2 active:pb-0 active:pl-3 btn-shadow-correct transition-all sm:w-[84px] sm:h-12 sm:pl-2 sm:active:pl-3"
               >
                 <h1 className="text-black text-sm font-[Inter] leading-none">CORRIGE ⠉⠕⠗⠗⠊⠑⠑</h1>
               </button>
