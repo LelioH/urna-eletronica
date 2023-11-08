@@ -34,7 +34,7 @@ export default function Home() {
             maxLength={1}
             onChange={() => {}}
             value={inputValues[i] ? inputValues[i] : ''}
-            className="border-black text-black flex justify-center items-center border w-10 h-14 rounded-md text-2xl font-[Inter] p-3"
+            className="border-black text-black flex justify-center items-center border w-10 h-14 rounded-md text-2xl font-inter p-3"
           />
         </React.Fragment>
       );
@@ -92,7 +92,7 @@ export default function Home() {
               {isentVote ? (
                 <React.Fragment>
                   <div className="flex items-center justify-center w-full h-full">
-                    <h1 className="text-slate-500 font-[Inter] text-9xl text-center break-words max-w-[607px] sm:text-5xl">
+                    <h1 className="text-slate-500 font-inter text-9xl text-center break-words max-w-[607px] sm:text-5xl">
                       ISENTÃO DE MERDA
                     </h1>
                   </div>
@@ -100,38 +100,38 @@ export default function Home() {
               ) : isConfirmed ? (
                 <React.Fragment>
                   <div className="flex items-center justify-center w-full h-full">
-                    <h1 className="text-slate-500 font-[Inter] text-9xl text-center break-words max-w-[607px]">FIM</h1>
+                    <h1 className="text-slate-500 font-inter text-9xl text-center break-words max-w-[607px]">FIM</h1>
                   </div>
                 </React.Fragment>
               ) : inputValues.map((num) => Math.floor(num)).join('') !== '12123' && inputValues.length === 5 ? (
                 <div className="flex flex-col items-center justify-center w-full h-full gap-2">
-                  <h1 className="text-black text-2xl font-[Inter]">Mona, você é maluca?</h1>
+                  <h1 className="text-black text-2xl font-inter">Mona, você é maluca?</h1>
                   <img src={Meme} width={400} height={311} alt="Meme" />
-                  <h1 className="text-black text-2xl font-[Inter]">Com todo respeito</h1>
+                  <h1 className="text-black text-2xl font-inter">Com todo respeito</h1>
                 </div>
               ) : (
                 <React.Fragment>
                   <div className="flex flex-row w-full h-full justify-between p-2 sm:gap-4 sm:text-center sm:justify-center sm:p-1">
                     <div className="flex flex-col justify-evenly sm:justify-between">
                       {inputValues && inputValues.length === 5 && (
-                        <h1 className="text-black text-lg font-[Inter] sm:text-xs">SEU VOTO PARA</h1>
+                        <h1 className="text-black text-lg font-inter sm:text-xs">SEU VOTO PARA</h1>
                       )}
                       <h1
-                        className={`text-black text-3xl font-[Inter] sm:text-lg sm:mt-${
+                        className={`text-black text-3xl font-inter sm:text-lg sm:mt-${
                           inputValues.length === 5 ? '[180px]' : '[200px]'
                         }`}
                       >
                         VEREADORA
                       </h1>
                       <div>
-                        <label className="text-black text-lg font-[Inter] sm:text-xs">NÚMERO:</label>
+                        <label className="text-black text-lg font-inter sm:text-xs">NÚMERO:</label>
                         <div className="flex flex-row gap-2 sm:gap-1">{renderInputs()}</div>
                       </div>
                       {inputValues && inputValues.length === 5 && (
                         <React.Fragment>
                           <div>
-                            <h1 className="text-black text-lg font-[Inter] sm:text-xs">NOME: LARA CARVALHO</h1>
-                            <h1 className="text-black text-lg font-[Inter] sm:text-xs">PARTIDO: MEU CORAÇÃO</h1>
+                            <h1 className="text-black text-lg font-inter sm:text-xs">NOME: LARA CARVALHO</h1>
+                            <h1 className="text-black text-lg font-inter sm:text-xs">PARTIDO: MEU CORAÇÃO</h1>
                           </div>
                         </React.Fragment>
                       )}
@@ -153,13 +153,13 @@ export default function Home() {
                     <React.Fragment>
                       <hr className="border border-black w-full mb-2 sm:mb-0 " />
                       <div className="self-start w-full sm:text-center sm:p-1">
-                        <h1 className="text-black text-lg font-[Inter] sm:text-xs">APERTE A TECLA:</h1>
+                        <h1 className="text-black text-lg font-inter sm:text-xs">APERTE A TECLA:</h1>
                         {inputValues.map((num) => Math.floor(num)).join('') === '12123' && (
-                          <h1 className="text-black text-lg font-[Inter] sm:text-xs">
+                          <h1 className="text-black text-lg font-inter sm:text-xs">
                             <span className="text-green-500">VERDE</span> para CONFIRMAR este voto
                           </h1>
                         )}
-                        <h1 className="text-black text-lg font-[Inter] sm:text-xs">
+                        <h1 className="text-black text-lg font-inter sm:text-xs">
                           <span className="text-red-500">VERMELHO</span> para REINICIAR este voto
                         </h1>
                       </div>
@@ -189,20 +189,20 @@ export default function Home() {
                 onClick={isentVoteFnc}
                 className="bg-white w-24 h-9 rounded-lg text-left justify-center pb-1 pl-2 active:pb-0 active:pl-3 btn-shadow-white transition-all cursor-pointer sm:w-[84px] sm:h-12 sm:pl-2 sm:active:pl-3"
               >
-                <h1 className="text-black text-sm font-[Inter] leading-none">BRANCO ⠃⠗⠁⠝⠉⠕</h1>
+                <h1 className="text-black text-sm font-inter leading-none">BRANCO ⠃⠗⠁⠝⠉⠕</h1>
               </button>
               <button
                 onClick={emptyInput}
                 className="bg-red-400 w-24 h-9 rounded-lg text-left justify-center pb-1 pl-2 active:pb-0 active:pl-3 btn-shadow-correct transition-all sm:w-[84px] sm:h-12 sm:pl-2 sm:active:pl-3"
               >
-                <h1 className="text-black text-sm font-[Inter] leading-none">CORRIGE ⠉⠕⠗⠗⠊⠑⠑</h1>
+                <h1 className="text-black text-sm font-inter leading-none">CORRIGE ⠉⠕⠗⠗⠊⠑⠑</h1>
               </button>
               <button
                 disabled={inputValues.length < 5}
                 onClick={confirmVote}
                 className="bg-green-400 w-24 h-24 rounded-lg text-left justify-center pb-14 pl-2 active:pb-12 active:pl-3 btn-shadow-confirm transition-all cursor-pointer sm:h-20 sm:pb-10 sm:active:pb-8"
               >
-                <h1 className="text-black text-sm font-[Inter] leading-none">CONFIRMA ⠉⠕⠝⠋⠗⠍⠁</h1>
+                <h1 className="text-black text-sm font-inter leading-none">CONFIRMA ⠉⠕⠝⠋⠗⠍⠁</h1>
               </button>
             </div>
           </div>
