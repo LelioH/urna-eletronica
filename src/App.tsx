@@ -83,7 +83,7 @@ export default function Home() {
   return (
     <div className="flex h-screen">
       <div
-        className="bg-gray-300 flex flex-col m-auto rounded-xl py-2 pl-16 pr-20"
+        className="bg-gray-300 flex flex-col m-auto rounded-xl py-2 pl-16 pr-20 sm:pl-8 sm:pr-10"
         style={{ boxShadow: '-32px -8px 3px 1px rgba(107, 114, 128, 0.5) inset' }}
       >
         <div className="border-gray-400 border-2 border-b-0 rounded-sm">
@@ -111,7 +111,7 @@ export default function Home() {
                 </div>
               ) : (
                 <React.Fragment>
-                  <div className="flex flex-row w-full h-full justify-between p-2">
+                  <div className="flex flex-row w-full h-full justify-between p-2 sm:gap-4">
                     <div className="flex flex-col justify-evenly">
                       {inputValues && inputValues.length === 5 && (
                         <h1 className="text-black text-lg font-[Inter]">SEU VOTO PARA</h1>
@@ -128,7 +128,7 @@ export default function Home() {
                         </React.Fragment>
                       )}
                     </div>
-                    <div className="bg-slate-50 w-[200px] h-[240px]">
+                    <div className="bg-slate-50 w-[200px] h-[240px] sm:w-[140px] sm:h-[180px] sm:p-0">
                       {inputValues && inputValues.length === 5 && (
                         <img
                           src={Lara}
@@ -161,8 +161,8 @@ export default function Home() {
               )}
             </div>
           </div>
-          <div className="flex flex-row pt-24 gap-x-5">
-            <div className=" flex flex-wrap items-center max-h-[224px]">
+          <div className="bg-green-300 flex flex-row pt-24 gap-x-5 sm:flex-col sm:items-center sm:gap-y-5 sm:pt-0">
+            <div className="flex flex-wrap items-center max-h-[224px]">
               <img src={TSH} width={209} height={132} alt="JH" />
             </div>
             <div className=" max-w-[270px] max-h-[224px] flex flex-wrap flex-row items-center justify-center gap-x-4 gap-y-3 p-2">
@@ -175,7 +175,7 @@ export default function Home() {
                 />
               ))}
             </div>
-            <div className="flex flex-col gap-y-4 py-3 mb-24 px-9">
+            <div className="flex flex-col gap-y-4 py-3 mb-24 px-9 sm:flex-row sm:mb-4">
               <button
                 disabled={inputValues.length === 5}
                 onClick={isentVoteFnc}
