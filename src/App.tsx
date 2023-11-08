@@ -117,8 +117,8 @@ export default function Home() {
                         <h1 className="text-black text-lg font-inter sm:text-xs">SEU VOTO PARA</h1>
                       )}
                       <h1
-                        className={`text-black text-3xl font-inter sm:text-lg sm:mt-${
-                          inputValues.length === 5 ? '[180px]' : '[200px]'
+                        className={`text-black text-3xl font-inter sm:text-lg ${
+                          inputValues.length === 5 ? 'sm:mt-[180px]' : 'sm:mt-[200px]'
                         }`}
                       >
                         VEREADORA
