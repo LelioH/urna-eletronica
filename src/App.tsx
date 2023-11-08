@@ -81,13 +81,13 @@ export default function Home() {
   }, [isConfirmed]);
 
   return (
-    <div className="flex h-[80vh]">
+    <div className="flex h-screen ">
       <div
-        className="bg-gray-300 flex flex-col m-auto rounded-xl py-2 pl-16 pr-20 sm:pl-8 sm:pr-10 sm:w-screen sm:py-0"
+        className="bg-gray-300 flex flex-col m-auto rounded-xl py-2 pl-16 pr-20 sm:max-h-[670px] sm:pl-8 sm:pr-10 sm:w-screen sm:py-0"
         style={{ boxShadow: '-32px -8px 3px 1px rgba(107, 114, 128, 0.5) inset' }}
       >
         <div className="border-gray-400 border-2 border-b-0 rounded-sm">
-          <div className="bg-black h-[436px] px-8 py-4 sm:px-4 sm:h-[400px]">
+          <div className="bg-black h-[436px] px-8 py-4 sm:px-4 sm:h-[336px]">
             <div className="bg-slate-100 w-full h-full flex flex-col items-center">
               {isentVote ? (
                 <React.Fragment>
@@ -151,8 +151,8 @@ export default function Home() {
 
                   {inputValues && inputValues.length === 5 && (
                     <React.Fragment>
-                      <hr className="border border-black w-full mb-2 sm:mb-0 " />
-                      <div className="self-start w-full sm:text-center sm:p-1">
+                      <hr className="border border-black w-full mb-2 sm:mb-0 sm:hidden" />
+                      <div className="self-start w-full sm:text-center sm:p-1 sm:hidden">
                         <h1 className="text-black text-lg font-inter sm:text-xs">APERTE A TECLA:</h1>
                         {inputValues.map((num) => Math.floor(num)).join('') === '12123' && (
                           <h1 className="text-black text-lg font-inter sm:text-xs">
