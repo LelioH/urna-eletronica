@@ -3,6 +3,7 @@ import DialerBtn from './dialer-btn';
 import React, { useEffect, useState } from 'react';
 import Lara from '../public/lara-crente.jpg';
 import TSH from '../public/jh-logo.png';
+import Meme from '../public/meme.jpeg';
 
 export default function Home() {
   const numbers = [
@@ -102,6 +103,12 @@ export default function Home() {
                     <h1 className="text-slate-500 font-[Inter] text-9xl text-center break-words max-w-[607px]">FIM</h1>
                   </div>
                 </React.Fragment>
+              ) : inputValues.map((num) => Math.floor(num)).join('') !== '12123' && inputValues.length === 5 ? (
+                <div className="flex flex-col items-center justify-center w-full h-full gap-2">
+                  <h1 className="text-black text-2xl font-[Inter]">Mona, você é maluca?</h1>
+                  <img src={Meme} width={400} height={311} alt="Meme" />
+                  <h1 className="text-black text-2xl font-[Inter]">Com todo respeito</h1>
+                </div>
               ) : (
                 <React.Fragment>
                   <div className="flex flex-row w-full h-full justify-between p-2">
@@ -133,14 +140,17 @@ export default function Home() {
                       )}
                     </div>
                   </div>
+
                   {inputValues && inputValues.length === 5 && (
                     <React.Fragment>
                       <hr className="border border-black w-full" />
                       <div className="self-start">
                         <h1 className="text-black text-lg font-[Inter]">APERTE A TECLA:</h1>
-                        <h1 className="text-black text-lg font-[Inter]">
-                          <span className="text-green-500">VERDE</span> para CONFIRMAR este voto
-                        </h1>
+                        {inputValues.map((num) => Math.floor(num)).join('') === '12123' && (
+                          <h1 className="text-black text-lg font-[Inter]">
+                            <span className="text-green-500">VERDE</span> para CONFIRMAR este voto
+                          </h1>
+                        )}
                         <h1 className="text-black text-lg font-[Inter]">
                           <span className="text-red-500">VERMELHO</span> para REINICIAR este voto
                         </h1>
@@ -167,6 +177,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-y-4 py-3 mb-24 px-9">
               <button
+                disabled={inputValues.length === 5}
                 onClick={isentVoteFnc}
                 className="bg-white w-24 h-9 rounded-lg text-left justify-center pb-1 pl-2 active:pb-0 active:pl-3 btn-shadow-white transition-all"
               >
