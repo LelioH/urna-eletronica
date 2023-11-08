@@ -1,9 +1,9 @@
 import './button.css';
 import DialerBtn from './dialer-btn';
 import React, { useEffect, useState } from 'react';
-import Lara from '../public/lara-crente.jpg';
-import TSH from '../public/jh-logo.png';
-import Meme from '../public/meme.jpeg';
+import Lara from './assets/lara-crente.jpg';
+import TSH from './assets/jh-logo.png';
+import Meme from './assets/meme.jpeg';
 
 export default function Home() {
   const numbers = [
@@ -81,7 +81,7 @@ export default function Home() {
   }, [isConfirmed]);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-[80vh]">
       <div
         className="bg-gray-300 flex flex-col m-auto rounded-xl py-2 pl-16 pr-20 sm:pl-8 sm:pr-10 sm:w-screen sm:py-0"
         style={{ boxShadow: '-32px -8px 3px 1px rgba(107, 114, 128, 0.5) inset' }}
@@ -136,7 +136,7 @@ export default function Home() {
                         </React.Fragment>
                       )}
                     </div>
-                    <div className="bg-slate-50 w-[200px] h-[240px] sm:absolute sm:top-[95px] sm:right-[135px] sm:w-[130px] sm:h-[150px] sm:p-0">
+                    <div className="bg-slate-50 w-[200px] h-[240px] sm:absolute sm:top-[45px] sm:right-[130px] sm:w-[130px] sm:h-[150px] sm:p-0">
                       {inputValues && inputValues.length === 5 && (
                         <img
                           src={Lara}
