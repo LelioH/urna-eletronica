@@ -136,7 +136,7 @@ export default function Home() {
                         </React.Fragment>
                       )}
                     </div>
-                    <div className="bg-slate-50 w-[200px] h-[240px] sm:absolute sm:top-[80px] sm:right-[130px] sm:w-[130px] sm:h-[170px] sm:p-0">
+                    <div className="bg-slate-50 w-[200px] h-[240px] sm:absolute sm:top-[60px] sm:right-[135px] sm:w-[130px] sm:h-[170px] sm:p-0">
                       {inputValues && inputValues.length === 5 && (
                         <img
                           src={Lara}
