@@ -34,7 +34,7 @@ export default function Home() {
             maxLength={1}
             onChange={() => {}}
             value={inputValues[i] ? inputValues[i] : ''}
-            className="border-black text-black flex justify-center items-center border w-10 h-14 rounded-md text-2xl font-inter p-3"
+            className="border-black text-black flex justify-center items-center border w-10 h-14 rounded-md text-2xl font-inter p-3 sm:h-10"
           />
         </React.Fragment>
       );
@@ -87,7 +87,7 @@ export default function Home() {
         style={{ boxShadow: '-32px -8px 3px 1px rgba(107, 114, 128, 0.5) inset' }}
       >
         <div className="border-gray-400 border-2 border-b-0 rounded-sm">
-          <div className="bg-black h-[436px] px-8 py-4 sm:px-4">
+          <div className="bg-black h-[436px] px-8 py-4 sm:px-4 sm:h-[400px]">
             <div className="bg-slate-100 w-full h-full flex flex-col items-center">
               {isentVote ? (
                 <React.Fragment>
@@ -118,7 +118,7 @@ export default function Home() {
                       )}
                       <h1
                         className={`text-black text-3xl font-inter sm:text-lg ${
-                          inputValues.length === 5 ? 'sm:mt-[180px]' : 'sm:mt-[200px]'
+                          inputValues.length === 5 ? 'sm:mt-[160px]' : 'sm:mt-[180px]'
                         }`}
                       >
                         VEREADORA
@@ -136,7 +136,7 @@ export default function Home() {
                         </React.Fragment>
                       )}
                     </div>
-                    <div className="bg-slate-50 w-[200px] h-[240px] sm:absolute sm:top-[60px] sm:right-[135px] sm:w-[130px] sm:h-[170px] sm:p-0">
+                    <div className="bg-slate-50 w-[200px] h-[240px] sm:absolute sm:top-[95px] sm:right-[135px] sm:w-[130px] sm:h-[150px] sm:p-0">
                       {inputValues && inputValues.length === 5 && (
                         <img
                           src={Lara}
@@ -169,7 +169,7 @@ export default function Home() {
               )}
             </div>
           </div>
-          <div className="flex flex-row pt-24 gap-x-5 sm:flex-col sm:items-center sm:gap-y-5 sm:pt-4">
+          <div className="flex flex-row pt-24 gap-x-5 sm:flex-col sm:items-center sm:gap-y-1 sm:pt-1">
             <div className="flex flex-wrap items-center max-h-[224px] sm:hidden">
               <img src={TSH} width={209} height={132} alt="JH" />
             </div>
@@ -183,7 +183,7 @@ export default function Home() {
                 />
               ))}
             </div>
-            <div className="flex flex-col gap-y-4 py-3 mb-24 px-9 sm:flex-row sm:mb-4 sm:gap-x-2 sm:gap-y-3 sm:items-end">
+            <div className="flex flex-col gap-y-4 py-3 mb-24 px-9 sm:flex-row sm:mb-4 sm:gap-x-2 sm:items-end sm:pt-0">
               <button
                 disabled={inputValues.length === 5}
                 onClick={isentVoteFnc}
