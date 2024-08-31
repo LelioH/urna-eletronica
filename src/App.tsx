@@ -1,28 +1,31 @@
-import './button.css';
-import DialerBtn from './dialer-btn';
-import React, { useEffect, useState } from 'react';
-import Lara from './assets/lara-crente.jpg';
-import TSH from './assets/jh-logo.png';
-import Meme from './assets/meme.jpeg';
+import "./button.css";
+import DialerBtn from "./dialer-btn";
+import React, { useEffect, useState } from "react";
+import Lara from "./assets/lara-urna.jpeg";
+import TSH from "./assets/jh-logo.png";
+import { IsentVote } from "./components/IsentVote";
+import { EndVote } from "./components/EndVote";
+import { WrongVote } from "./components/WrongVote";
+import { ActionButtons } from "./components/ActionButtons";
 
 export default function Home() {
   const numbers = [
-    { value: 1, braile: '⠃' },
-    { value: 2, braile: '⠉' },
-    { value: 3, braile: '⠙' },
-    { value: 4, braile: '⠑' },
-    { value: 5, braile: '⠋' },
-    { value: 6, braile: '⠛' },
-    { value: 7, braile: '⠓' },
-    { value: 8, braile: '⠊' },
-    { value: 9, braile: '⠚' },
-    { value: 0, braile: '⠁' },
+    { value: 1, braile: "⠃" },
+    { value: 2, braile: "⠉" },
+    { value: 3, braile: "⠙" },
+    { value: 4, braile: "⠑" },
+    { value: 5, braile: "⠋" },
+    { value: 6, braile: "⠛" },
+    { value: 7, braile: "⠓" },
+    { value: 8, braile: "⠊" },
+    { value: 9, braile: "⠚" },
+    { value: 0, braile: "⠁" },
   ];
 
   const [inputValues, setInputValues] = useState<number[]>([]);
   const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
   const [isentVote, setIsentVote] = useState<boolean>(false);
-  const confirmSound = new Audio('./confirma-urna.mp3');
+  const confirmSound = new Audio("./confirma-urna.mp3");
 
   const renderInputs = () => {
     const inputs = [];
@@ -33,8 +36,8 @@ export default function Home() {
             type="text"
             maxLength={1}
             onChange={() => {}}
-            value={inputValues[i] ? inputValues[i] : ''}
-            className="border-black text-black flex justify-center items-center border w-10 h-14 rounded-md text-2xl font-inter p-3 sm:h-10"
+            value={inputValues[i] ?? ""}
+            className="border-black text-black flex justify-center items-center border w-12 h-14 rounded-md text-2xl font-inter p-3 sm:h-10"
           />
         </React.Fragment>
       );
@@ -61,6 +64,7 @@ export default function Home() {
 
   const confirmVote = () => {
     setIsConfirmed(true);
+    console.log(confirmSound);
     confirmSound.play();
   };
 
@@ -81,57 +85,58 @@ export default function Home() {
   }, [isConfirmed]);
 
   return (
-    <div className="flex h-screen ">
+    <div className="flex h-svh-100">
       <div
         className="bg-gray-300 flex flex-col m-auto rounded-xl py-2 pl-16 pr-20 sm:max-h-[670px] sm:pl-8 sm:pr-10 sm:w-screen sm:py-0"
-        style={{ boxShadow: '-32px -8px 3px 1px rgba(107, 114, 128, 0.5) inset' }}
+        style={{
+          boxShadow: "-32px -8px 3px 1px rgba(107, 114, 128, 0.5) inset",
+        }}
       >
         <div className="border-gray-400 border-2 border-b-0 rounded-sm">
           <div className="bg-black h-[436px] px-8 py-4 sm:px-4 sm:h-[336px]">
             <div className="bg-slate-100 w-full h-full flex flex-col items-center">
               {isentVote ? (
-                <React.Fragment>
-                  <div className="flex items-center justify-center w-full h-full">
-                    <h1 className="text-slate-500 font-inter text-9xl text-center break-words max-w-[607px] sm:text-5xl">
-                      ISENTÃO DE MERDA
-                    </h1>
-                  </div>
-                </React.Fragment>
+                <IsentVote />
               ) : isConfirmed ? (
-                <React.Fragment>
-                  <div className="flex items-center justify-center w-full h-full">
-                    <h1 className="text-slate-500 font-inter text-9xl text-center break-words max-w-[607px]">FIM</h1>
-                  </div>
-                </React.Fragment>
-              ) : inputValues.map((num) => Math.floor(num)).join('') !== '12123' && inputValues.length === 5 ? (
-                <div className="flex flex-col items-center justify-center w-full h-full gap-2">
-                  <h1 className="text-black text-2xl font-inter">Mona, você é maluca?</h1>
-                  <img src={Meme} width={400} height={311} alt="Meme" />
-                  <h1 className="text-black text-2xl font-inter">Com todo respeito</h1>
-                </div>
+                <EndVote />
+              ) : inputValues.map((num) => Math.floor(num)).join("") !==
+                  "12000" && inputValues.length === 5 ? (
+                <WrongVote />
               ) : (
                 <React.Fragment>
                   <div className="flex flex-row w-full h-full justify-between p-2 sm:gap-4 sm:text-center sm:justify-center sm:p-1">
                     <div className="flex flex-col justify-evenly sm:justify-between">
                       {inputValues && inputValues.length === 5 && (
-                        <h1 className="text-black text-lg font-inter sm:text-xs">SEU VOTO PARA</h1>
+                        <h1 className="text-black text-lg font-inter sm:text-xs">
+                          SEU VOTO PARA
+                        </h1>
                       )}
                       <h1
                         className={`text-black text-3xl font-inter sm:text-lg ${
-                          inputValues.length === 5 ? 'sm:mt-[160px]' : 'sm:mt-[180px]'
+                          inputValues.length === 5
+                            ? "sm:mt-[160px]"
+                            : "sm:mt-[180px]"
                         }`}
                       >
                         VEREADORA
                       </h1>
                       <div>
-                        <label className="text-black text-lg font-inter sm:text-xs">NÚMERO:</label>
-                        <div className="flex flex-row gap-2 sm:gap-1">{renderInputs()}</div>
+                        <label className="text-black text-lg font-inter sm:text-xs">
+                          NÚMERO:
+                        </label>
+                        <div className="flex flex-row gap-2 sm:gap-1">
+                          {renderInputs()}
+                        </div>
                       </div>
                       {inputValues && inputValues.length === 5 && (
                         <React.Fragment>
                           <div>
-                            <h1 className="text-black text-lg font-inter sm:text-xs">NOME: LARA CARVALHO</h1>
-                            <h1 className="text-black text-lg font-inter sm:text-xs">PARTIDO: MEU CORAÇÃO</h1>
+                            <h1 className="text-black text-lg font-inter sm:text-xs">
+                              NOME: LARA CARVALHO
+                            </h1>
+                            <h1 className="text-black text-lg font-inter sm:text-xs">
+                              PARTIDO: PDT
+                            </h1>
                           </div>
                         </React.Fragment>
                       )}
@@ -143,24 +148,32 @@ export default function Home() {
                           width={200}
                           height={240}
                           alt="Lara Carvalho"
-                          style={{ objectFit: 'cover', maxWidth: '100%', maxHeight: '100%' }}
+                          style={{
+                            objectFit: "cover",
+                            maxWidth: "100%",
+                            maxHeight: "100%",
+                          }}
                         />
                       )}
                     </div>
                   </div>
-
                   {inputValues && inputValues.length === 5 && (
                     <React.Fragment>
                       <hr className="border border-black w-full mb-2 sm:mb-0 sm:hidden" />
-                      <div className="self-start w-full sm:text-center sm:p-1 sm:hidden">
-                        <h1 className="text-black text-lg font-inter sm:text-xs">APERTE A TECLA:</h1>
-                        {inputValues.map((num) => Math.floor(num)).join('') === '12123' && (
+                      <div className="self-start w-full pl-2 sm:text-center sm:p-1 sm:hidden">
+                        <h1 className="text-black text-lg font-inter sm:text-xs">
+                          APERTE A TECLA:
+                        </h1>
+                        {inputValues.map((num) => Math.floor(num)).join("") ===
+                          "12121" && (
                           <h1 className="text-black text-lg font-inter sm:text-xs">
-                            <span className="text-green-500">VERDE</span> para CONFIRMAR este voto
+                            <span className="text-green-500">VERDE</span> para
+                            CONFIRMAR este voto
                           </h1>
                         )}
                         <h1 className="text-black text-lg font-inter sm:text-xs">
-                          <span className="text-red-500">VERMELHO</span> para REINICIAR este voto
+                          <span className="text-red-500">VERMELHO</span> para
+                          REINICIAR este voto
                         </h1>
                       </div>
                     </React.Fragment>
@@ -183,28 +196,12 @@ export default function Home() {
                 />
               ))}
             </div>
-            <div className="flex flex-col gap-y-4 py-3 mb-24 px-9 sm:flex-row sm:mb-4 sm:gap-x-2 sm:items-end sm:pt-0">
-              <button
-                disabled={inputValues.length === 5}
-                onClick={isentVoteFnc}
-                className="bg-white w-24 h-9 rounded-lg text-left justify-center pb-1 pl-2 active:pb-0 active:pl-3 btn-shadow-white transition-all cursor-pointer sm:w-[84px] sm:h-12 sm:pl-2 sm:active:pl-3"
-              >
-                <h1 className="text-black text-sm font-inter leading-none">BRANCO ⠃⠗⠁⠝⠉⠕</h1>
-              </button>
-              <button
-                onClick={emptyInput}
-                className="bg-red-400 w-24 h-9 rounded-lg text-left justify-center pb-1 pl-2 active:pb-0 active:pl-3 btn-shadow-correct transition-all sm:w-[84px] sm:h-12 sm:pl-2 sm:active:pl-3"
-              >
-                <h1 className="text-black text-sm font-inter leading-none">CORRIGE ⠉⠕⠗⠗⠊⠑⠑</h1>
-              </button>
-              <button
-                disabled={inputValues.length < 5}
-                onClick={confirmVote}
-                className="bg-green-400 w-24 h-24 rounded-lg text-left justify-center pb-14 pl-2 active:pb-12 active:pl-3 btn-shadow-confirm transition-all cursor-pointer sm:h-20 sm:pb-10 sm:active:pb-8"
-              >
-                <h1 className="text-black text-sm font-inter leading-none">CONFIRMA ⠉⠕⠝⠋⠗⠍⠁</h1>
-              </button>
-            </div>
+            <ActionButtons
+              inputValues={inputValues}
+              isentVoteFnc={isentVoteFnc}
+              emptyInput={emptyInput}
+              confirmVote={confirmVote}
+            />
           </div>
         </div>
       </div>

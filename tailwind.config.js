@@ -29,6 +29,9 @@ export default {
       backgroundColor: {
         'dialer-button': '#262626',
       },
+      height: {
+        'svh-100': '100svh',
+      },
     },
   },
   plugins: [],
