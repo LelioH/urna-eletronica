@@ -132,7 +132,7 @@ export default function Home() {
                         <React.Fragment>
                           <div>
                             <h1 className="text-black text-lg font-inter sm:text-xs">
-                              NOME: LARA CARVALHO
+                              NOME: LARA OLIVEIRA
                             </h1>
                             <h1 className="text-black text-lg font-inter sm:text-xs">
                               PARTIDO: PDT
