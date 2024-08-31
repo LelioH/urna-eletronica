@@ -1,6 +1,6 @@
 export default function DialerBtn({
   value,
-  braile,
+  // braile,
   handleClick,
 }: {
   value: number;
@@ -21,7 +21,7 @@ export default function DialerBtn({
     >
       <h1 className="text-xl font-[Inter] sm:text-3xl">
         {value}
-        <span className="ml-2">{braile}</span>
+        {/* <span className="ml-2">{braile}</span> */}
       </h1>
     </button>
   );
