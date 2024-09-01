@@ -153,7 +153,6 @@ export default function Home() {
                             objectFit: "contain",
                             maxWidth: "100%",
                             maxHeight: "100%",
-                            opacity: "0.9",
                           }}
                         />
                       )}
@@ -161,22 +160,21 @@ export default function Home() {
                   </div>
                   {inputValues && inputValues.length === 5 && (
                     <React.Fragment>
-                      <hr className="border border-black w-full mb-2 sm:mb-0 sm:hidden" />
-                      <div className="self-start w-full pl-2 sm:text-center sm:p-1 sm:hidden">
+                      <hr className="border border-black w-full mb-1 sm:mb-0 sm:hidden" />
+                      <div className="flex flex-row gap-3 self-start w-full pl-2 sm:text-center sm:p-1 sm:hidden">
                         <h1 className="text-black text-lg font-inter sm:text-xs">
                           APERTE A TECLA:
                         </h1>
-                        {inputValues.map((num) => Math.floor(num)).join("") ===
-                          "12121" && (
+                        <div>
                           <h1 className="text-black text-lg font-inter sm:text-xs">
                             <span className="text-green-500">VERDE</span> para
                             CONFIRMAR este voto
                           </h1>
-                        )}
-                        <h1 className="text-black text-lg font-inter sm:text-xs">
-                          <span className="text-red-500">VERMELHO</span> para
-                          REINICIAR este voto
-                        </h1>
+                          <h1 className="text-black text-lg font-inter sm:text-xs">
+                            <span className="text-red-500">VERMELHO</span> para
+                            REINICIAR este voto
+                          </h1>
+                        </div>
                       </div>
                     </React.Fragment>
                   )}
