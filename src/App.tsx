@@ -182,7 +182,7 @@ export default function Home() {
               )}
             </div>
           </div>
-          <div className="flex flex-row pt-24 gap-x-5 sm:flex-col sm:items-center sm:gap-y-1 sm:pt-1">
+          <div className="flex flex-row pt-24 gap-x-5 sm:flex-col sm:items-center sm:gap-y-1 sm:pt-1 sm:mb-[-8px]">
             <div className="flex flex-wrap items-center max-h-[224px] sm:hidden">
               <img src={TSH} width={209} height={132} alt="JH" />
             </div>
