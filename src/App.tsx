@@ -1,5 +1,4 @@
 import "./button.css";
-import DialerBtn from "./dialer-btn";
 import React, { useEffect, useState } from "react";
 import Lara from "./assets/lara-urna.jpeg";
 import TSH from "./assets/jh-logo.png";
@@ -7,6 +6,7 @@ import { IsentVote } from "./components/IsentVote";
 import { EndVote } from "./components/EndVote";
 import { WrongVote } from "./components/WrongVote";
 import { ActionButtons } from "./components/ActionButtons";
+import DialerBtn from "./components/DialerButton";
 
 export default function Home() {
   const numbers = [
