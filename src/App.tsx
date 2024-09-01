@@ -1,6 +1,5 @@
-import "./button.css";
 import React, { useEffect, useState } from "react";
-import Lara from "./assets/lara-urna.jpeg";
+import Lara from "./assets/lara-urna.jpg";
 import TSH from "./assets/jh-logo.png";
 import { IsentVote } from "./components/IsentVote";
 import { EndVote } from "./components/EndVote";
@@ -106,11 +105,9 @@ export default function Home() {
                 <React.Fragment>
                   <div className="flex flex-row w-full h-full justify-between p-2 sm:gap-4 sm:text-center sm:justify-center sm:p-1">
                     <div className="flex flex-col justify-evenly sm:justify-between">
-                      {inputValues && inputValues.length === 5 && (
-                        <h1 className="text-black text-lg font-inter sm:text-xs">
-                          SEU VOTO PARA
-                        </h1>
-                      )}
+                      <h1 className="text-black text-lg font-inter sm:text-xs">
+                        SEU VOTO PARA
+                      </h1>
                       <h1
                         className={`text-black text-3xl font-inter sm:text-lg ${
                           inputValues.length === 5
@@ -141,7 +138,11 @@ export default function Home() {
                         </React.Fragment>
                       )}
                     </div>
-                    <div className="bg-slate-50 w-[200px] h-[240px] sm:absolute sm:top-[90px] sm:right-[135px] sm:w-[130px] sm:h-[150px] sm:p-0">
+                    <div
+                      className={`${
+                        inputValues.length !== 5 && "bg-slate-50"
+                      } bg-opacity-90 w-[200px] h-[240px] sm:absolute sm:top-[45px] sm:right-[135px] sm:w-[130px] sm:h-[150px] sm:p-0`}
+                    >
                       {inputValues && inputValues.length === 5 && (
                         <img
                           src={Lara}
@@ -149,9 +150,10 @@ export default function Home() {
                           height={240}
                           alt="Lara Carvalho"
                           style={{
-                            objectFit: "cover",
+                            objectFit: "contain",
                             maxWidth: "100%",
                             maxHeight: "100%",
+                            opacity: "0.9",
                           }}
                         />
                       )}
