@@ -5,7 +5,7 @@ export function IsentVote() {
     <React.Fragment>
       <div className="flex items-center justify-center w-full h-full">
         <h1 className="text-slate-500 font-inter text-9xl text-center break-words max-w-[607px] sm:text-5xl">
-          ISENTÃO DE MERDA
+          Vai dar a outros a chance de escolher por você?
         </h1>
       </div>
     </React.Fragment>
