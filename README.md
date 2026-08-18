@@ -1,27 +1,81 @@
-# React + TypeScript + Vite
+# Electronic Ballot Box
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small React simulation of a Brazilian electronic voting machine, built as an interactive front-end exercise.
 
-Currently, two official plugins are available:
+The interface recreates the physical rhythm of voting: enter a number on the keypad, inspect the candidate details, correct the vote, cast a blank vote, or confirm it with the green button. The UI is intentionally presented in Portuguese to match the real-world device it references.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## What is inside
 
-## Expanding the ESLint configuration
+- A responsive ballot-box layout that works on desktop and mobile screens
+- Numeric keypad with braille labels
+- Candidate preview after five digits are entered
+- Blank vote, correction, confirmation, and invalid-vote states
+- Confirmation sound and automatic reset after a completed vote
+- A focused component structure built with React and TypeScript
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Try the demo flow
 
-- Configure the top-level `parserOptions` property like this:
+The current demonstration is configured for the candidate shown on screen:
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+1. Enter `12000` using the keypad.
+2. Review the candidate information.
+3. Press `CONFIRMA` to complete the vote.
+
+Entering any other five-digit number displays the invalid-vote state. `BRANCO` casts a blank vote, while `CORRIGE` clears the current input.
+
+## Tech stack
+
+- React 18
+- TypeScript
+- Vite
+- Tailwind CSS
+- ESLint
+
+## Getting started
+
+### Prerequisites
+
+- Node.js 18 or newer
+- npm
+
+### Install and run
+
+```bash
+npm install
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Vite will print the local URL in the terminal, usually `http://localhost:5173`.
+
+### Production build
+
+```bash
+npm run build
+npm run preview
+```
+
+### Lint the project
+
+```bash
+npm run lint
+```
+
+## Project structure
+
+```text
+src/
+├── App.tsx                 # Voting machine state and main screen
+├── components/
+│   ├── ActionButtons.tsx   # Blank, correction, and confirmation actions
+│   ├── DialerButton.tsx    # Numeric keypad buttons
+│   ├── EndVote.tsx         # Completed-vote screen
+│   ├── IsentVote.tsx       # Blank-vote screen
+│   └── WrongVote.tsx       # Invalid-vote screen
+├── assets/                 # Candidate and project images
+├── App.css
+└── index.css
+```
+
+## Note
+
+This is an educational UI simulation, not a voting system. It has no ballot storage, authentication, backend, or connection to an official election process.
