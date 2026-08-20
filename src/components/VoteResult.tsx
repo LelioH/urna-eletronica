@@ -7,19 +7,25 @@ type VoteResultProps = {
 export function VoteResult({ result }: VoteResultProps) {
   if (result === "invalid") {
     return (
-      <div className="flex flex-col items-center justify-center w-full h-full gap-4 px-6 text-center font-inter">
+      <article
+        aria-label="Número não encontrado"
+        className="flex flex-col items-center justify-center w-full h-full gap-4 px-6 text-center font-inter"
+      >
         <h1 className="text-black text-3xl sm:text-2xl">
           NÚMERO NÃO ENCONTRADO
         </h1>
         <p className="text-black text-xl sm:text-base">
           Pressione CORRIGE para alterar o voto.
         </p>
-      </div>
+      </article>
     );
   }
 
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <article
+      aria-label="Voto concluído"
+      className="flex items-center justify-center w-full h-full"
+    >
       <img
         src={CorrectEnding}
         width={580}
@@ -27,6 +33,6 @@ export function VoteResult({ result }: VoteResultProps) {
         style={{ objectFit: "contain", maxWidth: "100%", maxHeight: "100%" }}
         alt="Voto concluído"
       />
-    </div>
+    </article>
   );
 }

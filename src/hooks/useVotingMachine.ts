@@ -106,6 +106,7 @@ export function useVotingMachine() {
     canConfirm,
     enterDigit: (digit: number) =>
       dispatch({ type: "DIGIT_PRESSED", digit: String(digit) }),
+    changeDigits: (digits: string) => dispatch({ type: "DIGITS_CHANGED", digits }),
     startBlankVote: () => dispatch({ type: "BLANK_PRESSED" }),
     correctVote: () => dispatch({ type: "CORRECT_PRESSED" }),
     confirmVote: () => dispatch({ type: "CONFIRM_PRESSED" }),

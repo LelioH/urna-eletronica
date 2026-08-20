@@ -9,7 +9,7 @@ export default function Home() {
   const votingMachine = useVotingMachine();
 
   return (
-    <div className="flex h-svh-100">
+    <main className="flex h-svh-100" aria-label="Simulador de urna eletrônica">
       <div
         className="bg-gray-300 flex flex-col m-auto rounded-xl py-2 pl-16 pr-20 sm:max-h-[670px] sm:pl-8 sm:pr-10 sm:w-screen sm:py-0"
         style={{
@@ -22,6 +22,7 @@ export default function Home() {
               <VotingScreen
                 office={simulatorOffice}
                 screen={votingMachine.screen}
+                onDigitsChange={votingMachine.changeDigits}
               />
             </div>
           </div>
@@ -44,6 +45,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

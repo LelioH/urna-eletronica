@@ -7,7 +7,7 @@ The interface recreates the physical rhythm of voting: enter a number on the key
 ## What is inside
 
 - A responsive ballot-box layout that works on desktop and mobile screens
-- Numeric keypad with braille labels
+- Numeric keypad with braille labels and direct keyboard entry
 - Candidate preview after five digits are entered
 - Blank vote, correction, confirmation, and invalid-vote states
 - Confirmation sound and automatic reset after a completed vote
@@ -17,7 +17,7 @@ The interface recreates the physical rhythm of voting: enter a number on the key
 
 The current demonstration is configured for the candidate shown on screen:
 
-1. Enter `12000` using the keypad.
+1. Enter `12000` using the keypad or the numbered fields. Direct entry accepts only digits; use Tab, arrow keys, Home/End, and Backspace to navigate and edit.
 2. Review the candidate information.
 3. Press `CONFIRMA` to complete the vote.
 

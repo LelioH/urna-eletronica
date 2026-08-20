@@ -18,12 +18,16 @@ type KeypadProps = {
 
 export function Keypad({ disabled, onDigit }: KeypadProps) {
   return (
-    <div className="max-w-[270px] max-h-[224px] flex flex-wrap flex-row items-center justify-center gap-x-3 gap-y-3 p-2 sm:w-full sm:p-0">
+    <section
+      aria-label="Teclado numérico"
+      className="max-w-[270px] max-h-[224px] flex flex-wrap flex-row items-center justify-center gap-x-3 gap-y-3 p-2 sm:w-full sm:p-0"
+    >
       {keys.map((key) => (
         <button
           key={key.value}
           type="button"
           disabled={disabled}
+          aria-label={`Digitar ${key.value}`}
           onClick={() => onDigit(key.value)}
           className="bg-dialer-button text-white flex flex-col justify-center w-14 h-9 rounded-lg pb-2 pl-1 active:pb-1 active:pl-1.5 button-shadow transition-all sm:w-20 sm:h-12 sm:pl-2 sm:active:pl-3"
         >
@@ -31,6 +35,6 @@ export function Keypad({ disabled, onDigit }: KeypadProps) {
           <span className="sr-only">Braille {key.braille}</span>
         </button>
       ))}
-    </div>
+    </section>
   );
 }

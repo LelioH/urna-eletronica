@@ -17,6 +17,7 @@ export type VoteState =
 
 export type VoteEvent =
   | { type: "DIGIT_PRESSED"; digit: string }
+  | { type: "DIGITS_CHANGED"; digits: string }
   | { type: "CORRECT_PRESSED" }
   | { type: "BLANK_PRESSED" }
   | { type: "CONFIRM_PRESSED" }
@@ -24,6 +25,21 @@ export type VoteEvent =
   | { type: "RESET" };
 
 export const initialVoteState: VoteState = { phase: "typing", digits: "" };
+
+function transitionFromDigits(digits: string): VoteState {
+  if (digits.length < simulatorOffice.digitCount) {
+    return { phase: "typing", digits };
+  }
+
+  const candidate = findCandidate(
+    simulatorElection,
+    simulatorOffice,
+    digits,
+  );
+  return candidate
+    ? { phase: "candidate-review", digits, candidate }
+    : { phase: "invalid", digits };
+}
 
 export function voteReducer(state: VoteState, event: VoteEvent): VoteState {
   switch (event.type) {
@@ -36,18 +52,16 @@ export function voteReducer(state: VoteState, event: VoteEvent): VoteState {
       }
 
       const digits = `${state.digits}${event.digit}`;
-      if (digits.length < simulatorOffice.digitCount) {
-        return { phase: "typing", digits };
-      }
+      return transitionFromDigits(digits);
+    }
 
-      const candidate = findCandidate(
-        simulatorElection,
-        simulatorOffice,
-        digits,
-      );
-      return candidate
-        ? { phase: "candidate-review", digits, candidate }
-        : { phase: "invalid", digits };
+    case "DIGITS_CHANGED": {
+      if (state.phase !== "typing") return state;
+
+      const digits = event.digits
+        .replace(/\D/g, "")
+        .slice(0, simulatorOffice.digitCount);
+      return transitionFromDigits(digits);
     }
 
     case "CORRECT_PRESSED":
