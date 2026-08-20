@@ -31,6 +31,10 @@ Entering any other five-digit number displays an invalid-vote state and disables
 - Tailwind CSS
 - ESLint
 
+## Braille notation
+
+The keypad shows isolated numeric symbols according to the Brazilian Portuguese Braille convention: the number sign followed by the first-series cell. The table in `src/domain/braille.ts` was checked against the Brazilian Ministry of Education's *Grafia Braille para a Língua Portuguesa*. A qualified braille reviewer should also approve any tactile or production hardware implementation.
+
 ## Getting started
 
 ### Prerequisites

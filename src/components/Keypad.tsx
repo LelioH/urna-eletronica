@@ -1,15 +1,4 @@
-const keys = [
-  { value: 1, braille: "⠃" },
-  { value: 2, braille: "⠉" },
-  { value: 3, braille: "⠙" },
-  { value: 4, braille: "⠑" },
-  { value: 5, braille: "⠋" },
-  { value: 6, braille: "⠛" },
-  { value: 7, braille: "⠓" },
-  { value: 8, braille: "⠊" },
-  { value: 9, braille: "⠚" },
-  { value: 0, braille: "⠁" },
-];
+import { brailleNumericKeys } from "../domain/braille";
 
 type KeypadProps = {
   disabled: boolean;
@@ -22,18 +11,20 @@ export function Keypad({ disabled, onDigit }: KeypadProps) {
       aria-label="Teclado numérico"
       className="max-w-[270px] max-h-[224px] flex flex-wrap flex-row items-center justify-center gap-x-3 gap-y-3 p-2 sm:w-full sm:p-0"
     >
-      {keys.map((key) => (
+      {brailleNumericKeys.map((key) => (
         <button
-          key={key.value}
+          key={key.digit}
           type="button"
           disabled={disabled}
-          aria-label={`Digitar ${key.value}`}
-          aria-keyshortcuts={String(key.value)}
-          onClick={() => onDigit(key.value)}
+          aria-label={`Tecla ${key.digit}`}
+          aria-keyshortcuts={String(key.digit)}
+          onClick={() => onDigit(key.digit)}
           className="bg-dialer-button text-white flex flex-col justify-center w-14 h-9 rounded-lg pb-2 pl-1 active:pb-1 active:pl-1.5 button-shadow transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500 focus-visible:ring-offset-2 sm:w-20 sm:h-12 sm:pl-2 sm:active:pl-3"
         >
-          <span className="text-xl font-[Inter] sm:text-3xl">{key.value}</span>
-          <span className="sr-only">Braille {key.braille}</span>
+          <span className="text-lg font-[Inter] sm:text-2xl">{key.digit}</span>
+          <span aria-hidden="true" className="text-xs leading-none">
+            {key.symbol}
+          </span>
         </button>
       ))}
     </section>
