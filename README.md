@@ -21,7 +21,7 @@ The current demonstration is configured for the candidate shown on screen:
 2. Review the candidate information.
 3. Press `CONFIRMA` to complete the vote.
 
-Entering any other five-digit number displays the invalid-vote state. `BRANCO` casts a blank vote, while `CORRIGE` clears the current input.
+Entering any other five-digit number displays the invalid-vote state. `BRANCO` opens a blank-vote review; press `CONFIRMA` to cast it or `CORRIGE` to return to entry.
 
 ## Tech stack
 

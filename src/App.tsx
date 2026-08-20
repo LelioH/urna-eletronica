@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Lara from "./assets/lara-urna.jpg";
 import TSH from "./assets/jh-logo.png";
 import { IsentVote } from "./components/IsentVote";
@@ -6,6 +6,11 @@ import { EndVote } from "./components/EndVote";
 import { WrongVote } from "./components/WrongVote";
 import { ActionButtons } from "./components/ActionButtons";
 import DialerBtn from "./components/DialerButton";
+
+type VoteState =
+  | { phase: "typing"; inputValues: number[] }
+  | { phase: "blank-review" }
+  | { phase: "completed" };
 
 export default function Home() {
   const numbers = [
@@ -21,10 +26,13 @@ export default function Home() {
     { value: 0, braile: "⠁" },
   ];
 
-  const [inputValues, setInputValues] = useState<number[]>([]);
-  const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
-  const [isentVote, setIsentVote] = useState<boolean>(false);
-  const confirmSound = new Audio("./confirma-urna.mp3");
+  const [voteState, setVoteState] = useState<VoteState>({
+    phase: "typing",
+    inputValues: [],
+  });
+  const confirmSound = useRef(new Audio("./confirma-urna.mp3"));
+  const inputValues =
+    voteState.phase === "typing" ? voteState.inputValues : [];
 
   const renderInputs = () => {
     const inputs = [];
@@ -45,43 +53,47 @@ export default function Home() {
   };
 
   const handleDialerClick = (value: number) => {
-    const counselorArray = [...inputValues];
-    if (counselorArray.length < 5) {
-      counselorArray.push(value);
-      setInputValues(counselorArray);
+    if (voteState.phase !== "typing" || inputValues.length === 5) return;
+
+    setVoteState({
+      phase: "typing",
+      inputValues: [...inputValues, value],
+    });
+  };
+
+  const startBlankVote = () => {
+    if (voteState.phase === "typing" && inputValues.length < 5) {
+      setVoteState({ phase: "blank-review" });
     }
   };
 
-  const isentVoteFnc = () => {
-    setIsentVote(true);
-  };
-
-  const emptyInput = () => {
-    setInputValues([]);
-    setIsentVote(false);
+  const correctVote = () => {
+    if (voteState.phase !== "completed") {
+      setVoteState({ phase: "typing", inputValues: [] });
+    }
   };
 
   const confirmVote = () => {
-    setIsConfirmed(true);
-    console.log(confirmSound);
-    confirmSound.play();
-  };
+    const canConfirmBlankVote = voteState.phase === "blank-review";
+    const canConfirmNumber =
+      voteState.phase === "typing" && inputValues.length === 5;
 
-  const prepareNewVote = () => {
-    setIsConfirmed(false);
-    confirmSound.currentTime = 0;
-    setIsentVote(false);
-    emptyInput();
+    if (!canConfirmBlankVote && !canConfirmNumber) return;
+
+    setVoteState({ phase: "completed" });
+    confirmSound.current.play();
   };
 
   useEffect(() => {
-    if (isConfirmed) {
-      setTimeout(() => {
-        prepareNewVote();
+    if (voteState.phase === "completed") {
+      const timeoutId = window.setTimeout(() => {
+        confirmSound.current.currentTime = 0;
+        setVoteState({ phase: "typing", inputValues: [] });
       }, 3000);
+
+      return () => window.clearTimeout(timeoutId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isConfirmed]);
+  }, [voteState.phase]);
 
   return (
     <div className="flex h-svh-100">
@@ -94,9 +106,9 @@ export default function Home() {
         <div className="border-gray-400 border-2 border-b-0 rounded-sm">
           <div className="bg-black h-[436px] px-8 py-4 sm:px-4 sm:h-[336px]">
             <div className="bg-slate-100 w-full h-full flex flex-col items-center">
-              {isentVote ? (
+              {voteState.phase === "blank-review" ? (
                 <IsentVote />
-              ) : isConfirmed ? (
+              ) : voteState.phase === "completed" ? (
                 <EndVote />
               ) : inputValues.map((num) => Math.floor(num)).join("") !==
                   "12000" && inputValues.length === 5 ? (
@@ -198,8 +210,9 @@ export default function Home() {
             </div>
             <ActionButtons
               inputValues={inputValues}
-              isentVoteFnc={isentVoteFnc}
-              emptyInput={emptyInput}
+              phase={voteState.phase}
+              startBlankVote={startBlankVote}
+              correctVote={correctVote}
               confirmVote={confirmVote}
             />
           </div>
