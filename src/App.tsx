@@ -23,7 +23,9 @@ export default function Home() {
   ];
 
   const [voteState, dispatch] = useReducer(voteReducer, initialVoteState);
-  const confirmSound = useRef(new Audio("./confirma-urna.mp3"));
+  const confirmSound = useRef<HTMLAudioElement | null>(null);
+  const finalizationTimer = useRef<number | null>(null);
+  const resetTimer = useRef<number | null>(null);
   const digits = "digits" in voteState ? voteState.digits : "";
   const candidate =
     voteState.phase === "candidate-review" ? voteState.candidate : undefined;
@@ -56,25 +58,56 @@ export default function Home() {
   const confirmVote = () => dispatch({ type: "CONFIRM_PRESSED" });
 
   useEffect(() => {
-    if (voteState.phase === "finalizing") {
-      void confirmSound.current.play().catch(() => undefined);
-      const timeoutId = window.setTimeout(() => {
-        dispatch({ type: "FINALIZATION_COMPLETED" });
-      }, 200);
+    const audio = new Audio(
+      `${import.meta.env.BASE_URL}confirma-urna.mp3`,
+    );
+    confirmSound.current = audio;
 
-      return () => window.clearTimeout(timeoutId);
+    return () => {
+      audio.pause();
+      audio.currentTime = 0;
+      confirmSound.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (voteState.phase !== "finalizing") return;
+
+    const audio = confirmSound.current;
+    if (audio) {
+      audio.currentTime = 0;
+      void audio.play().catch((error: unknown) => {
+        console.warn("Não foi possível reproduzir o som de confirmação.", error);
+      });
     }
+
+    finalizationTimer.current = window.setTimeout(() => {
+      dispatch({ type: "FINALIZATION_COMPLETED" });
+    }, 200);
+
+    return () => {
+      if (finalizationTimer.current !== null) {
+        window.clearTimeout(finalizationTimer.current);
+        finalizationTimer.current = null;
+      }
+    };
   }, [voteState.phase]);
 
   useEffect(() => {
-    if (voteState.phase === "completed") {
-      const timeoutId = window.setTimeout(() => {
-        confirmSound.current.currentTime = 0;
-        dispatch({ type: "RESET" });
-      }, 3000);
+    if (voteState.phase !== "completed") return;
 
-      return () => window.clearTimeout(timeoutId);
-    }
+    resetTimer.current = window.setTimeout(() => {
+      const audio = confirmSound.current;
+      if (audio) audio.currentTime = 0;
+      dispatch({ type: "RESET" });
+    }, 3000);
+
+    return () => {
+      if (resetTimer.current !== null) {
+        window.clearTimeout(resetTimer.current);
+        resetTimer.current = null;
+      }
+    };
   }, [voteState.phase]);
 
   return (
