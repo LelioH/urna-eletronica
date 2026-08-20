@@ -1,11 +1,11 @@
 import React, { useEffect, useReducer, useRef } from "react";
-import Lara from "./assets/lara-urna.jpg";
 import TSH from "./assets/jh-logo.png";
 import { IsentVote } from "./components/IsentVote";
 import { EndVote } from "./components/EndVote";
 import { WrongVote } from "./components/WrongVote";
 import { ActionButtons } from "./components/ActionButtons";
 import DialerBtn from "./components/DialerButton";
+import { simulatorOffice } from "./domain/election";
 import { initialVoteState, voteReducer } from "./voteMachine";
 
 export default function Home() {
@@ -32,7 +32,7 @@ export default function Home() {
 
   const renderInputs = () => {
     const inputs = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < simulatorOffice.digitCount; i++) {
       inputs.push(
         <React.Fragment key={i}>
           <input
@@ -142,7 +142,7 @@ export default function Home() {
                             : "sm:mt-[180px]"
                         }`}
                       >
-                        VEREADORA
+                        {simulatorOffice.label}
                       </h1>
                       <div>
                         <label className="text-black text-lg font-inter sm:text-xs">
@@ -172,10 +172,10 @@ export default function Home() {
                     >
                       {candidate && (
                         <img
-                          src={Lara}
+                          src={candidate.photoSrc}
                           width={200}
                           height={240}
-                          alt="Lara Carvalho"
+                          alt={candidate.photoAlt}
                           style={{
                             objectFit: "contain",
                             maxWidth: "100%",

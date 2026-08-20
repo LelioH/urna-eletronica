@@ -1,8 +1,9 @@
-export type Candidate = {
-  number: string;
-  name: string;
-  party: string;
-};
+import {
+  findCandidate,
+  simulatorElection,
+  simulatorOffice,
+  type Candidate,
+} from "./domain/election";
 
 export type VoteKind = "candidate" | "blank";
 
@@ -22,31 +23,28 @@ export type VoteEvent =
   | { type: "FINALIZATION_COMPLETED" }
   | { type: "RESET" };
 
-export const MAX_DIGITS = 5;
-
-const candidates: Candidate[] = [
-  { number: "12000", name: "LARA OLIVEIRA", party: "PDT" },
-];
-
 export const initialVoteState: VoteState = { phase: "typing", digits: "" };
-
-export function findCandidate(digits: string): Candidate | undefined {
-  return candidates.find((candidate) => candidate.number === digits);
-}
 
 export function voteReducer(state: VoteState, event: VoteEvent): VoteState {
   switch (event.type) {
     case "DIGIT_PRESSED": {
-      if (state.phase !== "typing" || state.digits.length >= MAX_DIGITS) {
+      if (
+        state.phase !== "typing" ||
+        state.digits.length >= simulatorOffice.digitCount
+      ) {
         return state;
       }
 
       const digits = `${state.digits}${event.digit}`;
-      if (digits.length < MAX_DIGITS) {
+      if (digits.length < simulatorOffice.digitCount) {
         return { phase: "typing", digits };
       }
 
-      const candidate = findCandidate(digits);
+      const candidate = findCandidate(
+        simulatorElection,
+        simulatorOffice,
+        digits,
+      );
       return candidate
         ? { phase: "candidate-review", digits, candidate }
         : { phase: "invalid", digits };
