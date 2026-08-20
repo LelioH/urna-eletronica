@@ -12,6 +12,8 @@ type VoteState =
   | { phase: "blank-review" }
   | { phase: "completed" };
 
+const RECOGNIZED_CANDIDATE_NUMBER = "12000";
+
 export default function Home() {
   const numbers = [
     { value: 1, braile: "⠃" },
@@ -33,6 +35,9 @@ export default function Home() {
   const confirmSound = useRef(new Audio("./confirma-urna.mp3"));
   const inputValues =
     voteState.phase === "typing" ? voteState.inputValues : [];
+  const enteredNumber = inputValues.join("");
+  const isRecognizedCandidate =
+    enteredNumber === RECOGNIZED_CANDIDATE_NUMBER;
 
   const renderInputs = () => {
     const inputs = [];
@@ -76,7 +81,7 @@ export default function Home() {
   const confirmVote = () => {
     const canConfirmBlankVote = voteState.phase === "blank-review";
     const canConfirmNumber =
-      voteState.phase === "typing" && inputValues.length === 5;
+      voteState.phase === "typing" && isRecognizedCandidate;
 
     if (!canConfirmBlankVote && !canConfirmNumber) return;
 
@@ -110,8 +115,7 @@ export default function Home() {
                 <IsentVote />
               ) : voteState.phase === "completed" ? (
                 <EndVote />
-              ) : inputValues.map((num) => Math.floor(num)).join("") !==
-                  "12000" && inputValues.length === 5 ? (
+              ) : inputValues.length === 5 && !isRecognizedCandidate ? (
                 <WrongVote />
               ) : (
                 <React.Fragment>
@@ -211,6 +215,7 @@ export default function Home() {
             <ActionButtons
               inputValues={inputValues}
               phase={voteState.phase}
+              canConfirmCandidate={isRecognizedCandidate}
               startBlankVote={startBlankVote}
               correctVote={correctVote}
               confirmVote={confirmVote}

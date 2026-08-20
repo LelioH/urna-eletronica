@@ -1,18 +1,20 @@
 export function ActionButtons({
   inputValues,
   phase,
+  canConfirmCandidate,
   startBlankVote,
   correctVote,
   confirmVote,
 }: {
   inputValues: number[];
   phase: "typing" | "blank-review" | "completed";
+  canConfirmCandidate: boolean;
   startBlankVote: () => void;
   correctVote: () => void;
   confirmVote: () => void;
 }) {
   const isBlankReview = phase === "blank-review";
-  const canConfirm = isBlankReview || inputValues.length === 5;
+  const canConfirm = isBlankReview || canConfirmCandidate;
 
   return (
     <div className="flex flex-col gap-y-4 py-3 mb-24 px-9 sm:flex-row sm:mb-4 sm:gap-x-2 sm:items-end sm:pt-0">

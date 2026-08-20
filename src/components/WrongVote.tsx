@@ -1,11 +1,10 @@
-import Meme from "../assets/meme.jpeg";
-
 export function WrongVote() {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full gap-2">
-      <h1 className="text-black text-2xl font-inter">Mona, você é maluca?</h1>
-      <img src={Meme} width={400} height={311} alt="Meme" />
-      <h1 className="text-black text-2xl font-inter">Com todo respeito</h1>
+    <div className="flex flex-col items-center justify-center w-full h-full gap-4 px-6 text-center font-inter">
+      <h1 className="text-black text-3xl sm:text-2xl">NÚMERO NÃO ENCONTRADO</h1>
+      <p className="text-black text-xl sm:text-base">
+        Pressione CORRIGE para alterar o voto.
+      </p>
     </div>
   );
 }
