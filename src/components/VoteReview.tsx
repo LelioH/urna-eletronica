@@ -178,13 +178,14 @@ export function VoteReview(props: VoteReviewProps) {
                     autoComplete="off"
                     maxLength={1}
                     readOnly={!canEditDigits}
+                    tabIndex={canEditDigits ? 0 : -1}
                     aria-label={`Dígito ${index + 1} de ${props.office.digitCount}`}
                     aria-describedby="digit-instructions"
                     value={props.digits[index] ?? ""}
                     onChange={(event) => handleDigitChange(index, event)}
                     onKeyDown={(event) => handleDigitKeyDown(index, event)}
                     onPaste={(event) => handlePaste(index, event)}
-                    className="border-black text-black flex justify-center items-center border w-12 h-14 rounded-md text-2xl font-inter p-3 sm:h-10"
+                    className="border-black text-black flex justify-center items-center border w-12 h-14 rounded-md text-2xl font-inter p-3 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500 focus-visible:ring-offset-2 sm:h-10"
                   />
                 ))}
               </div>
@@ -230,12 +231,12 @@ export function VoteReview(props: VoteReviewProps) {
             </p>
             <div>
               <p className="text-black text-lg font-inter sm:text-xs">
-                <span className="text-green-500">VERDE</span> para CONFIRMAR
-                este voto
+                Aperte <strong>CONFIRMA</strong> (tecla Enter ou C) para
+                confirmar este voto.
               </p>
               <p className="text-black text-lg font-inter sm:text-xs">
-                <span className="text-red-500">VERMELHO</span> para REINICIAR
-                este voto
+                Aperte <strong>CORRIGE</strong> (Backspace, Escape ou R) para
+                reiniciar este voto.
               </p>
             </div>
           </div>

@@ -28,8 +28,9 @@ export function Keypad({ disabled, onDigit }: KeypadProps) {
           type="button"
           disabled={disabled}
           aria-label={`Digitar ${key.value}`}
+          aria-keyshortcuts={String(key.value)}
           onClick={() => onDigit(key.value)}
-          className="bg-dialer-button text-white flex flex-col justify-center w-14 h-9 rounded-lg pb-2 pl-1 active:pb-1 active:pl-1.5 button-shadow transition-all sm:w-20 sm:h-12 sm:pl-2 sm:active:pl-3"
+          className="bg-dialer-button text-white flex flex-col justify-center w-14 h-9 rounded-lg pb-2 pl-1 active:pb-1 active:pl-1.5 button-shadow transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500 focus-visible:ring-offset-2 sm:w-20 sm:h-12 sm:pl-2 sm:active:pl-3"
         >
           <span className="text-xl font-[Inter] sm:text-3xl">{key.value}</span>
           <span className="sr-only">Braille {key.braille}</span>

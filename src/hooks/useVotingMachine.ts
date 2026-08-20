@@ -9,6 +9,16 @@ export type VotingScreenModel =
   | { view: "invalid" }
   | { view: "completed" };
 
+function isEditableTarget(target: EventTarget | null) {
+  if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) {
+    return !target.readOnly && !target.disabled;
+  }
+
+  if (target instanceof HTMLSelectElement) return !target.disabled;
+
+  return target instanceof HTMLElement && target.isContentEditable;
+}
+
 function createScreenModel(state: VoteState): VotingScreenModel {
   switch (state.phase) {
     case "typing":
@@ -87,6 +97,46 @@ export function useVotingMachine() {
       }
     };
   }, [voteState.phase]);
+
+  useEffect(() => {
+    const handleKeyboardShortcut = (event: KeyboardEvent) => {
+      if (event.repeat) return;
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        dispatch({ type: "CORRECT_PRESSED" });
+        return;
+      }
+
+      if (isEditableTarget(event.target)) return;
+
+      if (/^\d$/.test(event.key)) {
+        event.preventDefault();
+        dispatch({ type: "DIGIT_PRESSED", digit: event.key });
+        return;
+      }
+
+      if (event.key === "Backspace" || event.key.toLowerCase() === "r") {
+        event.preventDefault();
+        dispatch({ type: "CORRECT_PRESSED" });
+        return;
+      }
+
+      if (event.key.toLowerCase() === "b") {
+        event.preventDefault();
+        dispatch({ type: "BLANK_PRESSED" });
+        return;
+      }
+
+      if (event.key === "Enter" || event.key.toLowerCase() === "c") {
+        event.preventDefault();
+        dispatch({ type: "CONFIRM_PRESSED" });
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyboardShortcut);
+    return () => window.removeEventListener("keydown", handleKeyboardShortcut);
+  }, []);
 
   const canStartBlankVote = voteState.phase === "typing";
   const canCorrect =

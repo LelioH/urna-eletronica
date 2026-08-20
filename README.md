@@ -17,7 +17,7 @@ The interface recreates the physical rhythm of voting: enter a number on the key
 
 The current demonstration is configured for the candidate shown on screen:
 
-1. Enter `12000` using the keypad or the numbered fields. Direct entry accepts only digits; use Tab, arrow keys, Home/End, and Backspace to navigate and edit.
+1. Enter `12000` using the keypad or the numbered fields. Direct entry accepts only digits; use Tab, arrow keys, Home/End, and Backspace to navigate and edit. Outside a text field, `0`–`9` enter digits, `B` starts a blank vote, `Backspace`/`Escape`/`R` corrects it, and `Enter`/`C` confirms it.
 2. Review the candidate information.
 3. Press `CONFIRMA` to complete the vote.
 
