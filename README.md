@@ -64,13 +64,16 @@ npm run lint
 
 ```text
 src/
-├── App.tsx                 # Voting machine state and main screen
+├── App.tsx                 # Voting-machine composition
 ├── components/
-│   ├── ActionButtons.tsx   # Blank, correction, and confirmation actions
-│   ├── DialerButton.tsx    # Numeric keypad buttons
-│   ├── EndVote.tsx         # Completed-vote screen
-│   ├── IsentVote.tsx       # Blank-vote screen
-│   └── WrongVote.tsx       # Invalid-vote screen
+│   ├── ActionPanel.tsx     # Blank, correction, and confirmation controls
+│   ├── Keypad.tsx          # Numeric keypad
+│   ├── VoteResult.tsx      # Invalid and completed vote results
+│   ├── VoteReview.tsx      # Entry, candidate, and blank-vote screens
+│   └── VotingScreen.tsx    # Display composition
+├── domain/election.ts      # Election data and types
+├── hooks/useVotingMachine.ts # State, timers, audio, and event handlers
+├── voteMachine.ts          # State-transition reducer
 ├── assets/                 # Candidate and project images
 ├── App.css
 └── index.css
