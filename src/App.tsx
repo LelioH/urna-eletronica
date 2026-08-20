@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useReducer, useRef } from "react";
 import Lara from "./assets/lara-urna.jpg";
 import TSH from "./assets/jh-logo.png";
 import { IsentVote } from "./components/IsentVote";
@@ -6,13 +6,7 @@ import { EndVote } from "./components/EndVote";
 import { WrongVote } from "./components/WrongVote";
 import { ActionButtons } from "./components/ActionButtons";
 import DialerBtn from "./components/DialerButton";
-
-type VoteState =
-  | { phase: "typing"; inputValues: number[] }
-  | { phase: "blank-review" }
-  | { phase: "completed" };
-
-const RECOGNIZED_CANDIDATE_NUMBER = "12000";
+import { initialVoteState, voteReducer } from "./voteMachine";
 
 export default function Home() {
   const numbers = [
@@ -28,16 +22,11 @@ export default function Home() {
     { value: 0, braile: "⠁" },
   ];
 
-  const [voteState, setVoteState] = useState<VoteState>({
-    phase: "typing",
-    inputValues: [],
-  });
+  const [voteState, dispatch] = useReducer(voteReducer, initialVoteState);
   const confirmSound = useRef(new Audio("./confirma-urna.mp3"));
-  const inputValues =
-    voteState.phase === "typing" ? voteState.inputValues : [];
-  const enteredNumber = inputValues.join("");
-  const isRecognizedCandidate =
-    enteredNumber === RECOGNIZED_CANDIDATE_NUMBER;
+  const digits = "digits" in voteState ? voteState.digits : "";
+  const candidate =
+    voteState.phase === "candidate-review" ? voteState.candidate : undefined;
 
   const renderInputs = () => {
     const inputs = [];
@@ -48,7 +37,7 @@ export default function Home() {
             type="text"
             maxLength={1}
             onChange={() => {}}
-            value={inputValues[i] ?? ""}
+            value={digits[i] ?? ""}
             className="border-black text-black flex justify-center items-center border w-12 h-14 rounded-md text-2xl font-inter p-3 sm:h-10"
           />
         </React.Fragment>
@@ -57,43 +46,31 @@ export default function Home() {
     return inputs;
   };
 
-  const handleDialerClick = (value: number) => {
-    if (voteState.phase !== "typing" || inputValues.length === 5) return;
+  const handleDialerClick = (value: number) =>
+    dispatch({ type: "DIGIT_PRESSED", digit: String(value) });
 
-    setVoteState({
-      phase: "typing",
-      inputValues: [...inputValues, value],
-    });
-  };
+  const startBlankVote = () => dispatch({ type: "BLANK_PRESSED" });
 
-  const startBlankVote = () => {
-    if (voteState.phase === "typing" && inputValues.length < 5) {
-      setVoteState({ phase: "blank-review" });
+  const correctVote = () => dispatch({ type: "CORRECT_PRESSED" });
+
+  const confirmVote = () => dispatch({ type: "CONFIRM_PRESSED" });
+
+  useEffect(() => {
+    if (voteState.phase === "finalizing") {
+      void confirmSound.current.play().catch(() => undefined);
+      const timeoutId = window.setTimeout(() => {
+        dispatch({ type: "FINALIZATION_COMPLETED" });
+      }, 200);
+
+      return () => window.clearTimeout(timeoutId);
     }
-  };
-
-  const correctVote = () => {
-    if (voteState.phase !== "completed") {
-      setVoteState({ phase: "typing", inputValues: [] });
-    }
-  };
-
-  const confirmVote = () => {
-    const canConfirmBlankVote = voteState.phase === "blank-review";
-    const canConfirmNumber =
-      voteState.phase === "typing" && isRecognizedCandidate;
-
-    if (!canConfirmBlankVote && !canConfirmNumber) return;
-
-    setVoteState({ phase: "completed" });
-    confirmSound.current.play();
-  };
+  }, [voteState.phase]);
 
   useEffect(() => {
     if (voteState.phase === "completed") {
       const timeoutId = window.setTimeout(() => {
         confirmSound.current.currentTime = 0;
-        setVoteState({ phase: "typing", inputValues: [] });
+        dispatch({ type: "RESET" });
       }, 3000);
 
       return () => window.clearTimeout(timeoutId);
@@ -113,10 +90,11 @@ export default function Home() {
             <div className="bg-slate-100 w-full h-full flex flex-col items-center">
               {voteState.phase === "blank-review" ? (
                 <IsentVote />
-              ) : voteState.phase === "completed" ? (
-                <EndVote />
-              ) : inputValues.length === 5 && !isRecognizedCandidate ? (
+              ) : voteState.phase === "invalid" ? (
                 <WrongVote />
+              ) : voteState.phase === "finalizing" ||
+                voteState.phase === "completed" ? (
+                <EndVote />
               ) : (
                 <React.Fragment>
                   <div className="flex flex-row w-full h-full justify-between p-2 sm:gap-4 sm:text-center sm:justify-center sm:p-1">
@@ -126,7 +104,7 @@ export default function Home() {
                       </h1>
                       <h1
                         className={`text-black text-3xl font-inter sm:text-lg ${
-                          inputValues.length === 5
+                          candidate
                             ? "sm:mt-[160px]"
                             : "sm:mt-[180px]"
                         }`}
@@ -141,14 +119,14 @@ export default function Home() {
                           {renderInputs()}
                         </div>
                       </div>
-                      {inputValues && inputValues.length === 5 && (
+                      {candidate && (
                         <React.Fragment>
                           <div>
                             <h1 className="text-black text-lg font-inter sm:text-xs">
-                              NOME: LARA OLIVEIRA
+                              NOME: {candidate.name}
                             </h1>
                             <h1 className="text-black text-lg font-inter sm:text-xs">
-                              PARTIDO: PDT
+                              PARTIDO: {candidate.party}
                             </h1>
                           </div>
                         </React.Fragment>
@@ -156,10 +134,10 @@ export default function Home() {
                     </div>
                     <div
                       className={`${
-                        inputValues.length !== 5 && "bg-slate-50"
+                        !candidate && "bg-slate-50"
                       } bg-opacity-90 w-[200px] h-[240px] sm:absolute sm:top-[45px] sm:right-[135px] sm:w-[130px] sm:h-[150px] sm:p-0`}
                     >
-                      {inputValues && inputValues.length === 5 && (
+                      {candidate && (
                         <img
                           src={Lara}
                           width={200}
@@ -174,7 +152,7 @@ export default function Home() {
                       )}
                     </div>
                   </div>
-                  {inputValues && inputValues.length === 5 && (
+                  {candidate && (
                     <React.Fragment>
                       <hr className="border border-black w-full mb-1 sm:mb-0 sm:hidden" />
                       <div className="flex flex-row gap-3 self-start w-full pl-2 sm:text-center sm:p-1 sm:hidden">
@@ -213,9 +191,7 @@ export default function Home() {
               ))}
             </div>
             <ActionButtons
-              inputValues={inputValues}
               phase={voteState.phase}
-              canConfirmCandidate={isRecognizedCandidate}
               startBlankVote={startBlankVote}
               correctVote={correctVote}
               confirmVote={confirmVote}
