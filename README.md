@@ -43,8 +43,10 @@ The keypad shows isolated numeric symbols according to the Brazilian Portuguese 
 
 ### Prerequisites
 
-- Node.js 18 or newer
+- Node.js 24.19.0 (LTS)
 - npm
+
+If you use nvm, run `nvm use` in the project directory to select the version declared in `.nvmrc`.
 
 ### Install and run
 
