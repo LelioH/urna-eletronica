@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import type { Candidate } from "../domain/election";
 import { initialVoteState, voteReducer, type VoteState } from "../voteMachine";
 
@@ -149,13 +149,58 @@ export function useVotingMachine() {
     };
   }, [voteState.phase]);
 
+  const enterDigit = useCallback(
+    (digit: number) => {
+      if (voteState.phase !== "typing") return;
+      dispatch({ type: "DIGIT_PRESSED", digit: String(digit) });
+    },
+    [voteState.phase],
+  );
+
+  const changeDigits = useCallback(
+    (digits: string) => {
+      if (voteState.phase !== "typing") return;
+      dispatch({ type: "DIGITS_CHANGED", digits });
+    },
+    [voteState.phase],
+  );
+
+  const startBlankVote = useCallback(() => {
+    if (voteState.phase !== "typing") return;
+    dispatch({ type: "BLANK_PRESSED" });
+  }, [voteState.phase]);
+
+  const correctVote = useCallback(() => {
+    if (
+      voteState.phase !== "typing" &&
+      voteState.phase !== "candidate-review" &&
+      voteState.phase !== "invalid" &&
+      voteState.phase !== "blank-review"
+    ) {
+      return;
+    }
+
+    dispatch({ type: "CORRECT_PRESSED" });
+  }, [voteState.phase]);
+
+  const confirmVote = useCallback(() => {
+    if (
+      voteState.phase !== "candidate-review" &&
+      voteState.phase !== "blank-review"
+    ) {
+      return;
+    }
+
+    dispatch({ type: "CONFIRM_PRESSED" });
+  }, [voteState.phase]);
+
   useEffect(() => {
     const handleKeyboardShortcut = (event: KeyboardEvent) => {
       if (event.repeat) return;
 
       if (event.key === "Escape") {
         event.preventDefault();
-        dispatch({ type: "CORRECT_PRESSED" });
+        correctVote();
         return;
       }
 
@@ -163,31 +208,31 @@ export function useVotingMachine() {
 
       if (/^\d$/.test(event.key)) {
         event.preventDefault();
-        dispatch({ type: "DIGIT_PRESSED", digit: event.key });
+        enterDigit(Number(event.key));
         return;
       }
 
       if (event.key === "Backspace" || event.key.toLowerCase() === "r") {
         event.preventDefault();
-        dispatch({ type: "CORRECT_PRESSED" });
+        correctVote();
         return;
       }
 
       if (event.key.toLowerCase() === "b") {
         event.preventDefault();
-        dispatch({ type: "BLANK_PRESSED" });
+        startBlankVote();
         return;
       }
 
       if (event.key === "Enter" || event.key.toLowerCase() === "c") {
         event.preventDefault();
-        dispatch({ type: "CONFIRM_PRESSED" });
+        confirmVote();
       }
     };
 
     window.addEventListener("keydown", handleKeyboardShortcut);
     return () => window.removeEventListener("keydown", handleKeyboardShortcut);
-  }, []);
+  }, [confirmVote, correctVote, enterDigit, startBlankVote]);
 
   const canStartBlankVote = voteState.phase === "typing";
   const canCorrect =
@@ -206,11 +251,10 @@ export function useVotingMachine() {
     canStartBlankVote,
     canCorrect,
     canConfirm,
-    enterDigit: (digit: number) =>
-      dispatch({ type: "DIGIT_PRESSED", digit: String(digit) }),
-    changeDigits: (digits: string) => dispatch({ type: "DIGITS_CHANGED", digits }),
-    startBlankVote: () => dispatch({ type: "BLANK_PRESSED" }),
-    correctVote: () => dispatch({ type: "CORRECT_PRESSED" }),
-    confirmVote: () => dispatch({ type: "CONFIRM_PRESSED" }),
+    enterDigit,
+    changeDigits,
+    startBlankVote,
+    correctVote,
+    confirmVote,
   };
 }

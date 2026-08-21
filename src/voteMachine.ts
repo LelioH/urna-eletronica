@@ -42,6 +42,17 @@ function transitionFromDigits(digits: string): VoteState {
 }
 
 export function voteReducer(state: VoteState, event: VoteEvent): VoteState {
+  if (
+    state.phase === "finalizing" &&
+    event.type !== "FINALIZATION_COMPLETED"
+  ) {
+    return state;
+  }
+
+  if (state.phase === "completed" && event.type !== "RESET") {
+    return state;
+  }
+
   switch (event.type) {
     case "DIGIT_PRESSED": {
       if (
