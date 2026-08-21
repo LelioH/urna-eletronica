@@ -1,0 +1,125 @@
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-page: #f3f4f6;
+  --color-ink: #000000;
+  --color-machine-surface: #d1d5db;
+  --color-machine-border: #9ca3af;
+  --color-display-bezel: #000000;
+  --color-display-surface: #f1f5f9;
+  --color-keypad-surface: #262626;
+  --color-keypad-ink: #ffffff;
+  --color-action-blank: #ffffff;
+  --color-action-correct: #f87171;
+  --color-action-confirm: #4ade80;
+  --color-field-border: #000000;
+  --color-photo-placeholder: rgb(248 250 252 / 90%);
+  --color-focus-ring: #2563eb;
+  --color-focus-offset: #ffffff;
+  --color-rule: #000000;
+
+  --spacing-machine-block: 0.5rem;
+  --spacing-machine-inline-start: 4rem;
+  --spacing-machine-inline-end: 5rem;
+  --spacing-machine-inline-compact: 2rem;
+  --spacing-machine-block-compact: 0rem;
+  --spacing-machine-height-compact: 41.875rem;
+  --spacing-display-frame-height: 27.25rem;
+  --spacing-display-frame-height-compact: 21rem;
+  --spacing-display-frame-block: 1rem;
+  --spacing-display-frame-inline: 2rem;
+  --spacing-display-frame-inline-compact: 1rem;
+  --spacing-control-row-before: 6rem;
+  --spacing-control-row-before-compact: 0.25rem;
+  --spacing-control-row-gap: 1.25rem;
+  --spacing-control-row-gap-compact: 0.25rem;
+  --spacing-control-row-overlap: 0.5rem;
+  --spacing-logo-height: 14rem;
+  --spacing-action-panel-block: 0.75rem;
+  --spacing-action-panel-inline: 2.25rem;
+  --spacing-action-panel-gap: 1rem;
+  --spacing-action-panel-gap-compact: 0.5rem;
+  --spacing-action-panel-bottom: 6rem;
+  --spacing-action-panel-bottom-compact: 1rem;
+  --spacing-action-width: 6rem;
+  --spacing-action-width-compact: 5.25rem;
+  --spacing-action-height: 2.25rem;
+  --spacing-action-height-compact: 3rem;
+  --spacing-action-confirm-height: 6rem;
+  --spacing-action-confirm-height-compact: 5rem;
+  --spacing-action-inline: 0.5rem;
+  --spacing-action-inline-pressed: 0.75rem;
+  --spacing-action-block: 0.25rem;
+  --spacing-action-confirm-block: 3.5rem;
+  --spacing-action-confirm-block-pressed: 3rem;
+  --spacing-action-confirm-block-compact: 2.5rem;
+  --spacing-action-confirm-block-pressed-compact: 2rem;
+  --spacing-keypad-width: 16.875rem;
+  --spacing-keypad-height: 14rem;
+  --spacing-keypad-gap: 0.75rem;
+  --spacing-keypad-padding: 0.5rem;
+  --spacing-keypad-key-width: 3.5rem;
+  --spacing-keypad-key-height: 2.25rem;
+  --spacing-keypad-key-width-compact: 5rem;
+  --spacing-keypad-key-height-compact: 3rem;
+  --spacing-keypad-key-inline: 0.25rem;
+  --spacing-keypad-key-inline-pressed: 0.375rem;
+  --spacing-keypad-key-block: 0.5rem;
+  --spacing-keypad-key-block-pressed: 0.25rem;
+  --spacing-review-content: 0.5rem;
+  --spacing-review-content-compact: 0.25rem;
+  --spacing-review-digits-gap: 0.5rem;
+  --spacing-review-digits-gap-compact: 0.25rem;
+  --spacing-review-digit-width: 3rem;
+  --spacing-review-digit-height: 3.5rem;
+  --spacing-review-digit-height-compact: 2.5rem;
+  --spacing-review-digit-padding: 0.75rem;
+  --spacing-review-photo-width: 12.5rem;
+  --spacing-review-photo-height: 15rem;
+  --spacing-review-photo-width-compact: 8.125rem;
+  --spacing-review-photo-height-compact: 9.375rem;
+  --spacing-review-photo-offset-block-compact: 2.8125rem;
+  --spacing-review-photo-offset-inline-compact: 8.4375rem;
+  --spacing-review-title-candidate-offset-compact: 10rem;
+  --spacing-review-title-entry-offset-compact: 11.25rem;
+  --spacing-review-divider-bottom: 0.25rem;
+  --spacing-review-instructions-gap: 0.75rem;
+  --spacing-review-instructions-inline: 0.5rem;
+  --spacing-blank-title-width: 37.9375rem;
+  --spacing-blank-message-before: 1.5rem;
+  --spacing-state-message-gap: 1rem;
+  --spacing-state-message-inline: 1.5rem;
+  --spacing-focus-offset: 0.5rem;
+
+  --radius-machine: 0.75rem;
+  --radius-display: 0.125rem;
+  --radius-control: 0.5rem;
+  --radius-field: 0.375rem;
+
+  --shadow-machine-inset: -2rem -0.5rem 0.1875rem 0.0625rem rgb(107 114 128 / 50%) inset;
+  --shadow-keypad-key: 0 0.1875rem 0 rgb(64 64 64);
+  --shadow-action-blank: 0 0.1875rem 0 rgb(156 163 175);
+  --shadow-action-correct: 0 0.1875rem 0 rgb(185 28 28);
+  --shadow-action-confirm: 0 0.1875rem 0 rgb(21 128 61);
+
+  --breakpoint-compact: 40rem;
+}
+
+@layer base {
+  :root {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background-color: var(--color-page);
+  }
+
+  body {
+    min-width: 20rem;
+    min-height: 100svh;
+    background-color: var(--color-page);
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+}

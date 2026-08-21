@@ -9,17 +9,14 @@ export default function Home() {
   const votingMachine = useVotingMachine();
 
   return (
-    <main className="flex h-svh-100" aria-label="Simulador de urna eletrônica">
+    <main className="flex min-h-svh" aria-label="Simulador de urna eletrônica">
       <h1 className="sr-only">Simulador de urna eletrônica</h1>
       <div
-        className="bg-gray-300 flex flex-col m-auto rounded-xl py-2 pl-16 pr-20 sm:max-h-[670px] sm:pl-8 sm:pr-10 sm:w-screen sm:py-0"
-        style={{
-          boxShadow: "-32px -8px 3px 1px rgba(107, 114, 128, 0.5) inset",
-        }}
+        className="bg-machine-surface shadow-machine-inset m-auto flex flex-col rounded-machine py-machine-block ps-machine-inline-start pe-machine-inline-end max-compact:max-h-machine-height-compact max-compact:w-screen max-compact:py-machine-block-compact max-compact:ps-machine-inline-compact max-compact:pe-machine-inline-compact"
       >
-        <div className="border-gray-400 border-2 border-b-0 rounded-sm">
-          <div className="bg-black h-[436px] px-8 py-4 sm:px-4 sm:h-[336px]">
-            <div className="bg-slate-100 w-full h-full flex flex-col items-center">
+        <div className="border-machine-border rounded-display border-2 border-b-0">
+          <div className="bg-display-bezel h-display-frame-height px-display-frame-inline py-display-frame-block max-compact:h-display-frame-height-compact max-compact:px-display-frame-inline-compact">
+            <div className="bg-display-surface flex h-full w-full flex-col items-center">
               <VotingScreen
                 office={simulatorOffice}
                 screen={votingMachine.screen}
@@ -28,8 +25,8 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className="flex flex-row pt-24 gap-x-5 sm:flex-col sm:items-center sm:gap-y-1 sm:pt-1 sm:mb-[-8px]">
-            <div className="flex flex-wrap items-center max-h-[224px] sm:hidden">
+          <div className="flex flex-row gap-x-control-row-gap pt-control-row-before max-compact:flex-col max-compact:items-center max-compact:gap-y-control-row-gap-compact max-compact:pt-control-row-before-compact max-compact:-mb-control-row-overlap">
+            <div className="flex max-h-logo-height flex-wrap items-center max-compact:hidden">
               <img src={TSH} width={209} height={132} alt="JH" />
             </div>
             <Keypad

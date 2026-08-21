@@ -4,13 +4,13 @@ export function VoteResult() {
   return (
     <article
       aria-label="Voto concluído"
-      className="flex items-center justify-center w-full h-full"
+      className="flex h-full w-full items-center justify-center"
     >
       <img
         src={CorrectEnding}
         width={580}
         height={380}
-        style={{ objectFit: "contain", maxWidth: "100%", maxHeight: "100%" }}
+        className="max-h-full max-w-full object-contain"
         alt="Voto concluído"
       />
     </article>

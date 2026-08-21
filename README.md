@@ -81,8 +81,8 @@ src/
 ├── hooks/useVotingMachine.ts # State, timers, audio, and event handlers
 ├── voteMachine.ts          # State-transition reducer
 ├── assets/                 # Candidate and project images
-├── App.css
-└── index.css
+├── index.css               # Tailwind entry point
+└── styles/tokens.css       # Typography and semantic design tokens
 ```
 
 ## Note
