@@ -184,3 +184,16 @@ src/
 ## Note
 
 This is an educational UI simulation, not a voting system. It has no ballot storage, authentication, backend, or connection to an official election process.
+
+## Governance
+
+- [License](LICENSE): MIT for code, configuration, and documentation; media and visual assets are excluded.
+- [Asset rights register](ASSET-LICENSES.md): asset provenance and permission requirements.
+- [Contribution guide](CONTRIBUTING.md): local workflow, quality gates, and privacy rules.
+- [Architecture decisions](docs/adr): short records of voting-flow, privacy, and hosting decisions.
+
+Changes to the voting flow require a Code Owner review. The repository administrator must enable
+branch protection for `main` with required pull-request approval, required status checks, and
+**Require review from Code Owners**; the tracked [CODEOWNERS](.github/CODEOWNERS) file defines the
+protected paths. Issue and pull-request templates capture the required flow, accessibility, privacy,
+and test review.

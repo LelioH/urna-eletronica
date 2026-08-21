@@ -1,0 +1,9 @@
+# Enable "Require review from Code Owners" in the main branch protection rule.
+
+/src/voteMachine.ts @LelioH
+/src/voteMachine.test.ts @LelioH
+/src/hooks/useVotingMachine.ts @LelioH
+/src/domain/election.ts @LelioH
+/src/App.tsx @LelioH
+/src/components/ @LelioH
+/e2e/ @LelioH
