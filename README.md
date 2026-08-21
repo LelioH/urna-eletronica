@@ -128,6 +128,29 @@ Before enabling an external monitoring provider, define its retention, access co
 handling, and a privacy review. Keep the fixed-event boundary in `src/observability/publicDemoError.ts`;
 do not add vote data or browser identifiers to reports.
 
+### Security headers and GitHub Pages
+
+The current deployment uses GitHub Pages. It [does not let this repository set custom HTTP response
+headers](https://github.com/orgs/community/discussions/54257), so the following production policy
+cannot be enforced there. Do not add a `_headers` file or pretend that a meta tag configures these
+headers: GitHub Pages will serve it as a static file.
+
+When moving the public demo behind a host or reverse proxy that controls response headers, configure
+this baseline before enabling the deployment:
+
+```http
+Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'
+X-Content-Type-Options: nosniff
+Referrer-Policy: no-referrer
+```
+
+[`frame-ancestors`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/frame-ancestors)
+is intentionally part of the HTTP CSP, not an HTML meta tag. The page includes
+`<meta name="referrer" content="no-referrer">` as a browser fallback, but the HTTP header remains
+the deployment requirement. Keep every script, stylesheet, image, font, media file, and future error
+reporting endpoint same-origin. Adding a CDN, analytics SDK, tag manager, or other third-party script
+requires a security and privacy review plus a deliberate CSP change.
+
 ### Manual accessibility review
 
 Automated checks complement, but do not replace, this review before release:
