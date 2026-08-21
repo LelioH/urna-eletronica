@@ -22,6 +22,7 @@ export default function Home() {
               <VotingScreen
                 office={simulatorOffice}
                 screen={votingMachine.screen}
+                liveAnnouncement={votingMachine.liveAnnouncement}
                 onDigitsChange={votingMachine.changeDigits}
               />
             </div>

@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import type { Candidate } from "../domain/election";
 import { initialVoteState, voteReducer, type VoteState } from "../voteMachine";
 
@@ -39,11 +39,62 @@ function createScreenModel(state: VoteState): VotingScreenModel {
   }
 }
 
+function createLiveAnnouncement(
+  previousState: VoteState | null,
+  currentState: VoteState,
+): string | null {
+  if (currentState.phase === "typing") {
+    if (
+      previousState?.phase === "typing" &&
+      currentState.digits.length > previousState.digits.length
+    ) {
+      const newDigits = currentState.digits.slice(
+        previousState.digits.length,
+      );
+      return newDigits.length === 1
+        ? `Dígito ${newDigits} informado.`
+        : `Número digitado: ${newDigits}.`;
+    }
+
+    return null;
+  }
+
+  if (currentState.phase === "candidate-review") {
+    return `Candidato encontrado: ${currentState.candidate.name}, partido ${currentState.candidate.party}, número ${currentState.digits}.`;
+  }
+
+  if (currentState.phase === "invalid") {
+    return `Número ${currentState.digits} não encontrado. Pressione CORRIGE para alterar o voto.`;
+  }
+
+  if (currentState.phase === "blank-review") {
+    return "Voto em branco em revisão. Pressione CONFIRMA para confirmar ou CORRIGE para voltar.";
+  }
+
+  if (currentState.phase === "completed") {
+    return "Voto confirmado.";
+  }
+
+  return null;
+}
+
 export function useVotingMachine() {
   const [voteState, dispatch] = useReducer(voteReducer, initialVoteState);
+  const [liveAnnouncement, setLiveAnnouncement] = useState("");
   const confirmSound = useRef<HTMLAudioElement | null>(null);
   const finalizationTimer = useRef<number | null>(null);
   const resetTimer = useRef<number | null>(null);
+  const previousVoteState = useRef<VoteState | null>(null);
+
+  useEffect(() => {
+    const announcement = createLiveAnnouncement(
+      previousVoteState.current,
+      voteState,
+    );
+    previousVoteState.current = voteState;
+
+    if (announcement !== null) setLiveAnnouncement(announcement);
+  }, [voteState]);
 
   useEffect(() => {
     const audio = new Audio(
@@ -150,6 +201,7 @@ export function useVotingMachine() {
 
   return {
     screen: createScreenModel(voteState),
+    liveAnnouncement,
     canEnterDigits: voteState.phase === "typing",
     canStartBlankVote,
     canCorrect,
