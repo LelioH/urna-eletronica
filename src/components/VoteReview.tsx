@@ -28,9 +28,9 @@ export function VoteReview(props: VoteReviewProps) {
     return (
       <article className="flex items-center justify-center w-full h-full">
         <div className="text-center text-black font-inter">
-          <h1 className="text-5xl break-words max-w-[607px] sm:text-4xl">
+          <h2 className="text-5xl break-words max-w-[607px] sm:text-4xl">
             VOTO EM BRANCO
-          </h1>
+          </h2>
           <p className="mt-6 text-xl sm:text-base">
             Aperte CONFIRMA para confirmar ou CORRIGE para voltar.
           </p>
@@ -145,13 +145,13 @@ export function VoteReview(props: VoteReviewProps) {
           <p className="text-black text-lg font-inter sm:text-xs">
             SEU VOTO PARA
           </p>
-          <h1
+          <h2
             className={`text-black text-3xl font-inter sm:text-lg ${
               candidate ? "sm:mt-[160px]" : "sm:mt-[180px]"
             }`}
           >
             {props.office.label}
-          </h1>
+          </h2>
           <form
             aria-label="Número do candidato"
             noValidate

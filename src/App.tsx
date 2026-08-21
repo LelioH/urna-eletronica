@@ -10,6 +10,7 @@ export default function Home() {
 
   return (
     <main className="flex h-svh-100" aria-label="Simulador de urna eletrônica">
+      <h1 className="sr-only">Simulador de urna eletrônica</h1>
       <div
         className="bg-gray-300 flex flex-col m-auto rounded-xl py-2 pl-16 pr-20 sm:max-h-[670px] sm:pl-8 sm:pr-10 sm:w-screen sm:py-0"
         style={{
