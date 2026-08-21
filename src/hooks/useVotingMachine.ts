@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import type { Candidate } from "../domain/election";
+import { reportPublicDemoError } from "../observability/publicDemoError";
 import { initialVoteState, voteReducer, type VoteState } from "../voteMachine";
 
 export type VotingScreenModel =
@@ -19,16 +20,16 @@ function isEditableTarget(target: EventTarget | null) {
   return target instanceof HTMLElement && target.isContentEditable;
 }
 
-function reportAudioFailure(error: unknown) {
-  console.warn("Não foi possível reproduzir o som de confirmação.", error);
+function reportAudioFailure() {
+  reportPublicDemoError("confirmation-audio-unavailable");
 }
 
 function playConfirmationSound(audio: HTMLAudioElement) {
   try {
     const playback = audio.play();
     void playback.catch(reportAudioFailure);
-  } catch (error) {
-    reportAudioFailure(error);
+  } catch {
+    reportAudioFailure();
   }
 }
 
@@ -106,7 +107,7 @@ export function useVotingMachine() {
 
   useEffect(() => {
     const audio = new Audio(`${import.meta.env.BASE_URL}confirma-urna.mp3`);
-    const handleAudioError = () => reportAudioFailure(audio.error);
+    const handleAudioError = () => reportAudioFailure();
     confirmSound.current = audio;
     audio.addEventListener("error", handleAudioError);
 

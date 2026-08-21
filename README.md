@@ -118,6 +118,16 @@ Pull requests also run `npm ci`, lint, typecheck, coverage, build, and `npm audi
 
 `axe-core` runs in component tests and in every supported browser against the entry, candidate-review, invalid-vote, and blank-vote screens. Component tests skip only color-contrast because JSDOM cannot calculate rendered colors; browser tests include it.
 
+### Public-demo diagnostics and privacy
+
+The demo sends no telemetry or error report to third parties. Its only diagnostic event is a fixed
+development-only code for confirmation-audio failure. It cannot include a vote number, candidate,
+vote state, identifier, or other user-provided value.
+
+Before enabling an external monitoring provider, define its retention, access controls, IP-address
+handling, and a privacy review. Keep the fixed-event boundary in `src/observability/publicDemoError.ts`;
+do not add vote data or browser identifiers to reports.
+
 ### Manual accessibility review
 
 Automated checks complement, but do not replace, this review before release:
