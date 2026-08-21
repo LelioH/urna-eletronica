@@ -64,7 +64,7 @@ function createLiveAnnouncement(
   }
 
   if (currentState.phase === "invalid") {
-    return `Número ${currentState.digits} não encontrado. Pressione CORRIGE para alterar o voto.`;
+    return `Número ${currentState.digits} não encontrado. Pressione CORRIGE para alterar.`;
   }
 
   if (currentState.phase === "blank-review") {

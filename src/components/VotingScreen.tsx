@@ -1,6 +1,8 @@
 import type { Office } from "../domain/election";
 import type { VotingScreenModel } from "../hooks/useVotingMachine";
 import type { ReactNode } from "react";
+import { BlankVote } from "./BlankVote";
+import { InvalidVote } from "./InvalidVote";
 import { VoteResult } from "./VoteResult";
 import { VoteReview } from "./VoteReview";
 
@@ -41,13 +43,13 @@ export function VotingScreen({
       );
       break;
     case "blank-review":
-      content = <VoteReview variant="blank-review" />;
+      content = <BlankVote />;
       break;
     case "invalid":
-      content = <VoteResult result="invalid" />;
+      content = <InvalidVote />;
       break;
     case "completed":
-      content = <VoteResult result="completed" />;
+      content = <VoteResult />;
       break;
   }
 

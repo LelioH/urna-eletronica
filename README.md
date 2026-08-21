@@ -71,9 +71,11 @@ src/
 ├── App.tsx                 # Voting-machine composition
 ├── components/
 │   ├── ActionPanel.tsx     # Blank, correction, and confirmation controls
+│   ├── BlankVote.tsx       # Blank-vote review screen
+│   ├── InvalidVote.tsx     # Invalid-vote message
 │   ├── Keypad.tsx          # Numeric keypad
-│   ├── VoteResult.tsx      # Invalid and completed vote results
-│   ├── VoteReview.tsx      # Entry, candidate, and blank-vote screens
+│   ├── VoteResult.tsx      # Completed vote result
+│   ├── VoteReview.tsx      # Entry and candidate-review screens
 │   └── VotingScreen.tsx    # Display composition
 ├── domain/election.ts      # Election data and types
 ├── hooks/useVotingMachine.ts # State, timers, audio, and event handlers
