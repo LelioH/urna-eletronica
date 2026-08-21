@@ -72,7 +72,8 @@ jobs:
     runs-on: ubuntu-latest
     concurrency:
       group: pages
-      cancel-in-progress: true
+      # A new deploy waits for the current publication to finish.
+      cancel-in-progress: false
     permissions:
       contents: read
       pages: write
