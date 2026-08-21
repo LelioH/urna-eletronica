@@ -54,10 +54,7 @@ export function VotingScreen({
   }
 
   return (
-    <section
-      aria-label="Tela da urna"
-      className="w-full h-full flex flex-col items-center"
-    >
+    <section aria-label="Tela da urna" className="w-full h-full flex flex-col items-center">
       <p className="sr-only" aria-live="polite" aria-atomic="true">
         {liveAnnouncement}
       </p>

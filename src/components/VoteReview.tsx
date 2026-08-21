@@ -1,9 +1,4 @@
-import {
-  useRef,
-  type ChangeEvent,
-  type ClipboardEvent,
-  type KeyboardEvent,
-} from "react";
+import { useRef, type ChangeEvent, type ClipboardEvent, type KeyboardEvent } from "react";
 import type { Candidate, Office } from "../domain/election";
 
 type VoteReviewProps =
@@ -23,8 +18,7 @@ type VoteReviewProps =
 export function VoteReview(props: VoteReviewProps) {
   const digitFields = useRef<Array<HTMLInputElement | null>>([]);
 
-  const candidate =
-    props.variant === "candidate-review" ? props.candidate : undefined;
+  const candidate = props.variant === "candidate-review" ? props.candidate : undefined;
   const canEditDigits = props.variant === "entry";
 
   const focusDigit = (index: number) => {
@@ -38,9 +32,9 @@ export function VoteReview(props: VoteReviewProps) {
     if (!maskedDigits) return;
 
     const insertionIndex = Math.min(index, props.digits.length);
-    const nextDigits = `${props.digits.slice(0, insertionIndex)}${maskedDigits}${
-      props.digits.slice(insertionIndex + maskedDigits.length)
-    }`.slice(0, props.office.digitCount);
+    const nextDigits = `${props.digits.slice(0, insertionIndex)}${maskedDigits}${props.digits.slice(
+      insertionIndex + maskedDigits.length,
+    )}`.slice(0, props.office.digitCount);
 
     props.onDigitsChange(nextDigits);
     const nextIndex = Math.min(
@@ -50,10 +44,7 @@ export function VoteReview(props: VoteReviewProps) {
     focusDigit(nextIndex);
   };
 
-  const handleDigitChange = (
-    index: number,
-    event: ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleDigitChange = (index: number, event: ChangeEvent<HTMLInputElement>) => {
     const typedDigits = event.currentTarget.value.replace(/\D/g, "");
 
     if (typedDigits) {
@@ -62,16 +53,11 @@ export function VoteReview(props: VoteReviewProps) {
     }
 
     if (props.variant === "entry" && index < props.digits.length) {
-      props.onDigitsChange(
-        `${props.digits.slice(0, index)}${props.digits.slice(index + 1)}`,
-      );
+      props.onDigitsChange(`${props.digits.slice(0, index)}${props.digits.slice(index + 1)}`);
     }
   };
 
-  const handleDigitKeyDown = (
-    index: number,
-    event: KeyboardEvent<HTMLInputElement>,
-  ) => {
+  const handleDigitKeyDown = (index: number, event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
       event.preventDefault();
       focusDigit(Math.max(index - 1, 0));
@@ -106,9 +92,7 @@ export function VoteReview(props: VoteReviewProps) {
       const previousIndex = Math.min(index - 1, props.digits.length - 1);
       if (previousIndex >= 0) {
         props.onDigitsChange(
-          `${props.digits.slice(0, previousIndex)}${props.digits.slice(
-            previousIndex + 1,
-          )}`,
+          `${props.digits.slice(0, previousIndex)}${props.digits.slice(previousIndex + 1)}`,
         );
         focusDigit(previousIndex);
       }
@@ -126,9 +110,7 @@ export function VoteReview(props: VoteReviewProps) {
     <article className="flex h-full w-full flex-col">
       <div className="flex h-full w-full flex-row justify-center gap-4 p-review-content-compact text-center tablet:justify-between tablet:gap-0 tablet:p-review-content tablet:text-left">
         <div className="flex flex-col justify-between tablet:justify-evenly">
-          <p className="text-ink text-xs tablet:text-lg">
-            SEU VOTO PARA
-          </p>
+          <p className="text-ink text-xs tablet:text-lg">SEU VOTO PARA</p>
           <h2
             className={`text-ink text-lg tablet:mt-0 tablet:text-3xl ${
               candidate
@@ -144,12 +126,10 @@ export function VoteReview(props: VoteReviewProps) {
             onSubmit={(event) => event.preventDefault()}
           >
             <fieldset>
-              <legend className="text-ink text-xs tablet:text-lg">
-                NÚMERO:
-              </legend>
+              <legend className="text-ink text-xs tablet:text-lg">NÚMERO:</legend>
               <p id="digit-instructions" className="sr-only">
-                Digite apenas números. Use Tab ou as setas para navegar entre os
-                campos e Backspace para apagar.
+                Digite apenas números. Use Tab ou as setas para navegar entre os campos e Backspace
+                para apagar.
               </p>
               <div className="flex flex-row gap-review-digits-gap-compact tablet:gap-review-digits-gap">
                 {Array.from({ length: props.office.digitCount }, (_, index) => (
@@ -179,12 +159,8 @@ export function VoteReview(props: VoteReviewProps) {
           </form>
           {candidate && (
             <div>
-              <p className="text-ink text-xs tablet:text-lg">
-                NOME: {candidate.name}
-              </p>
-              <p className="text-ink text-xs tablet:text-lg">
-                PARTIDO: {candidate.party}
-              </p>
+              <p className="text-ink text-xs tablet:text-lg">NOME: {candidate.name}</p>
+              <p className="text-ink text-xs tablet:text-lg">PARTIDO: {candidate.party}</p>
             </div>
           )}
         </div>
@@ -206,17 +182,13 @@ export function VoteReview(props: VoteReviewProps) {
         <>
           <hr className="border-rule mb-review-divider-bottom hidden w-full border desktop:block" />
           <div className="hidden w-full flex-row self-start gap-review-instructions-gap ps-review-instructions-inline desktop:flex">
-            <p className="text-ink text-lg">
-              APERTE A TECLA:
-            </p>
+            <p className="text-ink text-lg">APERTE A TECLA:</p>
             <div>
               <p className="text-ink text-lg">
-                Aperte <strong>CONFIRMA</strong> (tecla Enter ou C) para
-                confirmar este voto.
+                Aperte <strong>CONFIRMA</strong> (tecla Enter ou C) para confirmar este voto.
               </p>
               <p className="text-ink text-lg">
-                Aperte <strong>CORRIGE</strong> (Backspace, Escape ou R) para
-                reiniciar este voto.
+                Aperte <strong>CORRIGE</strong> (Backspace, Escape ou R) para reiniciar este voto.
               </p>
             </div>
           </div>

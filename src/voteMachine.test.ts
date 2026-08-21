@@ -27,12 +27,8 @@ describe("voteReducer", () => {
     const invalidVote = enterNumber("99999");
 
     expect(invalidVote).toEqual({ phase: "invalid", digits: "99999" });
-    expect(voteReducer(invalidVote, { type: "CONFIRM_PRESSED" })).toBe(
-      invalidVote,
-    );
-    expect(voteReducer(invalidVote, { type: "CORRECT_PRESSED" })).toEqual(
-      initialVoteState,
-    );
+    expect(voteReducer(invalidVote, { type: "CONFIRM_PRESSED" })).toBe(invalidVote);
+    expect(voteReducer(invalidVote, { type: "CORRECT_PRESSED" })).toEqual(initialVoteState);
   });
 
   it("allows a blank vote to be reviewed, confirmed, completed, and reset", () => {
@@ -45,20 +41,14 @@ describe("voteReducer", () => {
     expect(review).toEqual({ phase: "blank-review" });
     expect(finalizing).toEqual({ phase: "finalizing", kind: "blank" });
     expect(completed).toEqual({ phase: "completed", kind: "blank" });
-    expect(voteReducer(completed, { type: "RESET" })).toEqual(
-      initialVoteState,
-    );
+    expect(voteReducer(completed, { type: "RESET" })).toEqual(initialVoteState);
   });
 
   it("ignores commands while a vote is finalizing or completed", () => {
     const finalizing: VoteState = { phase: "finalizing", kind: "candidate" };
     const completed: VoteState = { phase: "completed", kind: "candidate" };
 
-    expect(voteReducer(finalizing, { type: "CORRECT_PRESSED" })).toBe(
-      finalizing,
-    );
-    expect(voteReducer(completed, { type: "DIGIT_PRESSED", digit: "1" })).toBe(
-      completed,
-    );
+    expect(voteReducer(finalizing, { type: "CORRECT_PRESSED" })).toBe(finalizing);
+    expect(voteReducer(completed, { type: "DIGIT_PRESSED", digit: "1" })).toBe(completed);
   });
 });

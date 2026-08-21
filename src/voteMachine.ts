@@ -31,21 +31,14 @@ function transitionFromDigits(digits: string): VoteState {
     return { phase: "typing", digits };
   }
 
-  const candidate = findCandidate(
-    simulatorElection,
-    simulatorOffice,
-    digits,
-  );
+  const candidate = findCandidate(simulatorElection, simulatorOffice, digits);
   return candidate
     ? { phase: "candidate-review", digits, candidate }
     : { phase: "invalid", digits };
 }
 
 export function voteReducer(state: VoteState, event: VoteEvent): VoteState {
-  if (
-    state.phase === "finalizing" &&
-    event.type !== "FINALIZATION_COMPLETED"
-  ) {
+  if (state.phase === "finalizing" && event.type !== "FINALIZATION_COMPLETED") {
     return state;
   }
 
@@ -55,10 +48,7 @@ export function voteReducer(state: VoteState, event: VoteEvent): VoteState {
 
   switch (event.type) {
     case "DIGIT_PRESSED": {
-      if (
-        state.phase !== "typing" ||
-        state.digits.length >= simulatorOffice.digitCount
-      ) {
+      if (state.phase !== "typing" || state.digits.length >= simulatorOffice.digitCount) {
         return state;
       }
 
@@ -69,9 +59,7 @@ export function voteReducer(state: VoteState, event: VoteEvent): VoteState {
     case "DIGITS_CHANGED": {
       if (state.phase !== "typing") return state;
 
-      const digits = event.digits
-        .replace(/\D/g, "")
-        .slice(0, simulatorOffice.digitCount);
+      const digits = event.digits.replace(/\D/g, "").slice(0, simulatorOffice.digitCount);
       return transitionFromDigits(digits);
     }
 
@@ -98,9 +86,7 @@ export function voteReducer(state: VoteState, event: VoteEvent): VoteState {
       return state;
 
     case "FINALIZATION_COMPLETED":
-      return state.phase === "finalizing"
-        ? { phase: "completed", kind: state.kind }
-        : state;
+      return state.phase === "finalizing" ? { phase: "completed", kind: state.kind } : state;
 
     case "RESET":
       return state.phase === "completed" ? initialVoteState : state;

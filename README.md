@@ -30,6 +30,7 @@ Entering any other five-digit number displays an invalid-vote state and disables
 - Vite
 - Tailwind CSS
 - ESLint
+- Prettier
 
 ## Responsive strategy
 
@@ -37,7 +38,7 @@ The interface follows Tailwind's mobile-first model. Its base styles target comp
 
 ## Braille notation
 
-The keypad shows isolated numeric symbols according to the Brazilian Portuguese Braille convention: the number sign followed by the first-series cell. The table in `src/domain/braille.ts` was checked against the Brazilian Ministry of Education's *Grafia Braille para a Língua Portuguesa*. A qualified braille reviewer should also approve any tactile or production hardware implementation.
+The keypad shows isolated numeric symbols according to the Brazilian Portuguese Braille convention: the number sign followed by the first-series cell. The table in `src/domain/braille.ts` was checked against the Brazilian Ministry of Education's _Grafia Braille para a Língua Portuguesa_. A qualified braille reviewer should also approve any tactile or production hardware implementation.
 
 ## Getting started
 
@@ -69,6 +70,23 @@ npm run preview
 ```bash
 npm run lint
 ```
+
+### Formatting and optional local hooks
+
+```bash
+npm run format
+npm run format:check
+```
+
+The local pre-commit hook is optional. To enable it for your clone, run:
+
+```bash
+npm run hooks:install
+```
+
+It runs Prettier and ESLint only on staged files. Hooks are not installed automatically and can
+be skipped locally; `format:check`, lint, type checking, tests, build, and audit in CI remain the
+source of truth.
 
 ### Test the project
 

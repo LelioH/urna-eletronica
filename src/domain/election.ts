@@ -50,7 +50,6 @@ export function findCandidate(
   number: string,
 ): Candidate | undefined {
   return election.candidates.find(
-    (candidate) =>
-      candidate.officeId === office.id && candidate.number === number,
+    (candidate) => candidate.officeId === office.id && candidate.number === number,
   );
 }

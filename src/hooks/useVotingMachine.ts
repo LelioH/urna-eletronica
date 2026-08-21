@@ -61,9 +61,7 @@ function createLiveAnnouncement(
       previousState?.phase === "typing" &&
       currentState.digits.length > previousState.digits.length
     ) {
-      const newDigits = currentState.digits.slice(
-        previousState.digits.length,
-      );
+      const newDigits = currentState.digits.slice(previousState.digits.length);
       return newDigits.length === 1
         ? `Dígito ${newDigits} informado.`
         : `Número digitado: ${newDigits}.`;
@@ -100,19 +98,14 @@ export function useVotingMachine() {
   const previousVoteState = useRef<VoteState | null>(null);
 
   useEffect(() => {
-    const announcement = createLiveAnnouncement(
-      previousVoteState.current,
-      voteState,
-    );
+    const announcement = createLiveAnnouncement(previousVoteState.current, voteState);
     previousVoteState.current = voteState;
 
     if (announcement !== null) setLiveAnnouncement(announcement);
   }, [voteState]);
 
   useEffect(() => {
-    const audio = new Audio(
-      `${import.meta.env.BASE_URL}confirma-urna.mp3`,
-    );
+    const audio = new Audio(`${import.meta.env.BASE_URL}confirma-urna.mp3`);
     const handleAudioError = () => reportAudioFailure(audio.error);
     confirmSound.current = audio;
     audio.addEventListener("error", handleAudioError);
@@ -198,10 +191,7 @@ export function useVotingMachine() {
   }, [voteState.phase]);
 
   const confirmVote = useCallback(() => {
-    if (
-      voteState.phase !== "candidate-review" &&
-      voteState.phase !== "blank-review"
-    ) {
+    if (voteState.phase !== "candidate-review" && voteState.phase !== "blank-review") {
       return;
     }
 
@@ -254,9 +244,7 @@ export function useVotingMachine() {
     voteState.phase === "candidate-review" ||
     voteState.phase === "invalid" ||
     voteState.phase === "blank-review";
-  const canConfirm =
-    voteState.phase === "candidate-review" ||
-    voteState.phase === "blank-review";
+  const canConfirm = voteState.phase === "candidate-review" || voteState.phase === "blank-review";
 
   return {
     screen: createScreenModel(voteState),

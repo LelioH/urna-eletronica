@@ -2,10 +2,7 @@ import CorrectEnding from "../assets/correct-ending.png";
 
 export function VoteResult() {
   return (
-    <article
-      aria-label="Voto concluído"
-      className="flex h-full w-full items-center justify-center"
-    >
+    <article aria-label="Voto concluído" className="flex h-full w-full items-center justify-center">
       <img
         src={CorrectEnding}
         width={580}

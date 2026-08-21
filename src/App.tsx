@@ -11,9 +11,7 @@ export default function Home() {
   return (
     <main className="flex min-h-svh" aria-label="Simulador de urna eletrônica">
       <h1 className="sr-only">Simulador de urna eletrônica</h1>
-      <div
-        className="bg-machine-surface shadow-machine-inset flex w-screen flex-col rounded-machine py-machine-block-compact ps-machine-inline-compact pe-machine-inline-compact tablet:m-auto tablet:min-w-machine-width-tablet tablet:w-auto desktop:py-machine-block desktop:ps-machine-inline-start desktop:pe-machine-inline-end"
-      >
+      <div className="bg-machine-surface shadow-machine-inset flex w-screen flex-col rounded-machine py-machine-block-compact ps-machine-inline-compact pe-machine-inline-compact tablet:m-auto tablet:min-w-machine-width-tablet tablet:w-auto desktop:py-machine-block desktop:ps-machine-inline-start desktop:pe-machine-inline-end">
         <div className="border-machine-border rounded-display border-2 border-b-0">
           <div className="bg-display-bezel h-display-frame-height-compact px-display-frame-inline-compact py-display-frame-block tablet:h-display-frame-height-tablet tablet:px-display-frame-inline desktop:h-display-frame-height">
             <div className="bg-display-surface flex h-full w-full flex-col items-center">
@@ -29,10 +27,7 @@ export default function Home() {
             <div className="hidden max-h-logo-height flex-wrap items-center desktop:flex">
               <img src={TSH} width={209} height={132} alt="JH" />
             </div>
-            <Keypad
-              disabled={!votingMachine.canEnterDigits}
-              onDigit={votingMachine.enterDigit}
-            />
+            <Keypad disabled={!votingMachine.canEnterDigits} onDigit={votingMachine.enterDigit} />
             <ActionPanel
               blankDisabled={!votingMachine.canStartBlankVote}
               correctDisabled={!votingMachine.canCorrect}
