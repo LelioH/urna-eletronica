@@ -76,6 +76,13 @@ npm test
 
 Reducer tests cover voting-state transitions. Interface tests use Testing Library to exercise the visible keypad and action controls, including recognized candidates, invalid votes, and blank-vote review.
 
+Run type checking and coverage with:
+
+```bash
+npm run typecheck
+npm run test:coverage
+```
+
 ### End-to-end tests
 
 Install the browser engines once, then run the critical voting flows locally:
@@ -86,6 +93,8 @@ npm run test:e2e
 ```
 
 The Playwright suite runs the recognized-candidate, invalid-vote, and blank-vote flows in Chromium, Firefox, and WebKit. The same browser matrix runs in GitHub Actions after lint, unit/interface tests, and the production build.
+
+Pull requests also run `npm ci`, lint, typecheck, coverage, build, and `npm audit`. GitHub Pages deployment is restricted to pushes to `main` and starts only after the quality and browser-matrix jobs succeed.
 
 `axe-core` runs in component tests and in every supported browser against the entry, candidate-review, invalid-vote, and blank-vote screens. Component tests skip only color-contrast because JSDOM cannot calculate rendered colors; browser tests include it.
 
