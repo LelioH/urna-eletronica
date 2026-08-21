@@ -76,6 +76,28 @@ npm test
 
 Reducer tests cover voting-state transitions. Interface tests use Testing Library to exercise the visible keypad and action controls, including recognized candidates, invalid votes, and blank-vote review.
 
+### End-to-end tests
+
+Install the browser engines once, then run the critical voting flows locally:
+
+```bash
+npm run test:e2e:install
+npm run test:e2e
+```
+
+The Playwright suite runs the recognized-candidate, invalid-vote, and blank-vote flows in Chromium, Firefox, and WebKit. The same browser matrix runs in GitHub Actions after lint, unit/interface tests, and the production build.
+
+`axe-core` runs in component tests and in every supported browser against the entry, candidate-review, invalid-vote, and blank-vote screens. Component tests skip only color-contrast because JSDOM cannot calculate rendered colors; browser tests include it.
+
+### Manual accessibility review
+
+Automated checks complement, but do not replace, this review before release:
+
+1. Use Tab and Shift+Tab to verify a visible focus indicator and the expected order: number fields, keypad, then action buttons.
+2. At 200% browser zoom, check 320 px, 768 px, 1024 px, and a wide desktop viewport for clipping, overlap, or hidden controls.
+3. Use only the keyboard to enter a recognized number, make a blank vote, correct an invalid vote, and confirm a valid or blank vote.
+4. With NVDA and Firefox or VoiceOver and Safari, verify that the polite live region announces new digits, candidate discovery, invalid-vote guidance, blank-vote review, and confirmation once each.
+
 ## Project structure
 
 ```text
