@@ -1,6 +1,6 @@
 {
   "name": "eletronic-urn-vite",
-  "private": false,
+  "private": true,
   "version": "0.0.0",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
