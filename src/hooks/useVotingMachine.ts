@@ -19,6 +19,19 @@ function isEditableTarget(target: EventTarget | null) {
   return target instanceof HTMLElement && target.isContentEditable;
 }
 
+function reportAudioFailure(error: unknown) {
+  console.warn("Não foi possível reproduzir o som de confirmação.", error);
+}
+
+function playConfirmationSound(audio: HTMLAudioElement) {
+  try {
+    const playback = audio.play();
+    void playback.catch(reportAudioFailure);
+  } catch (error) {
+    reportAudioFailure(error);
+  }
+}
+
 function createScreenModel(state: VoteState): VotingScreenModel {
   switch (state.phase) {
     case "typing":
@@ -100,9 +113,12 @@ export function useVotingMachine() {
     const audio = new Audio(
       `${import.meta.env.BASE_URL}confirma-urna.mp3`,
     );
+    const handleAudioError = () => reportAudioFailure(audio.error);
     confirmSound.current = audio;
+    audio.addEventListener("error", handleAudioError);
 
     return () => {
+      audio.removeEventListener("error", handleAudioError);
       audio.pause();
       audio.currentTime = 0;
       confirmSound.current = null;
@@ -115,9 +131,7 @@ export function useVotingMachine() {
     const audio = confirmSound.current;
     if (audio) {
       audio.currentTime = 0;
-      void audio.play().catch((error: unknown) => {
-        console.warn("Não foi possível reproduzir o som de confirmação.", error);
-      });
+      playConfirmationSound(audio);
     }
 
     finalizationTimer.current = window.setTimeout(() => {
