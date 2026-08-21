@@ -1,34 +1,34 @@
 import Lara from "../assets/lara-urna.jpg";
 
-export type Office = {
-  id: string;
-  label: string;
-  digitCount: number;
+export type Office<TId extends string = string> = {
+  readonly id: TId;
+  readonly label: string;
+  readonly digitCount: number;
 };
 
-export type Candidate = {
-  id: string;
-  officeId: Office["id"];
-  number: string;
-  name: string;
-  party: string;
-  photoSrc: string;
-  photoAlt: string;
+export type Candidate<TOfficeId extends string = string> = {
+  readonly id: string;
+  readonly officeId: TOfficeId;
+  readonly number: string;
+  readonly name: string;
+  readonly party: string;
+  readonly photoSrc: string;
+  readonly photoAlt: string;
 };
 
-export type Election = {
-  id: string;
-  offices: Office[];
-  candidates: Candidate[];
+export type Election<TOfficeId extends string = string> = {
+  readonly id: string;
+  readonly offices: readonly Office<TOfficeId>[];
+  readonly candidates: readonly Candidate<TOfficeId>[];
 };
 
-export const simulatorOffice: Office = {
+export const simulatorOffice = {
   id: "councilor",
   label: "VEREADORA",
   digitCount: 5,
-};
+} as const satisfies Office<"councilor">;
 
-export const simulatorElection: Election = {
+export const simulatorElection = {
   id: "urna-demo",
   offices: [simulatorOffice],
   candidates: [
@@ -42,13 +42,13 @@ export const simulatorElection: Election = {
       photoAlt: "Lara Oliveira",
     },
   ],
-};
+} as const satisfies Election<typeof simulatorOffice.id>;
 
-export function findCandidate(
-  election: Election,
-  office: Office,
+export function findCandidate<TOfficeId extends string>(
+  election: Election<TOfficeId>,
+  office: Office<TOfficeId>,
   number: string,
-): Candidate | undefined {
+): Candidate<TOfficeId> | undefined {
   return election.candidates.find(
     (candidate) => candidate.officeId === office.id && candidate.number === number,
   );
