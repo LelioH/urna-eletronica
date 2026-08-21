@@ -68,6 +68,14 @@ npm run preview
 npm run lint
 ```
 
+### Test the project
+
+```bash
+npm test
+```
+
+Reducer tests cover voting-state transitions. Interface tests use Testing Library to exercise the visible keypad and action controls, including recognized candidates, invalid votes, and blank-vote review.
+
 ## Project structure
 
 ```text
