@@ -25,11 +25,15 @@ Entering any other five-digit number displays an invalid-vote state and disables
 
 ## Tech stack
 
-- React 18
+- React 19
 - TypeScript
 - Vite
 - Tailwind CSS
 - ESLint
+
+## Responsive strategy
+
+The interface follows Tailwind's mobile-first model. Its base styles target compact screens, including 320 px wide viewports. The named `tablet:` breakpoint starts at `48rem` (768 px) and uses a wider layout without the logo or excess control spacing. The complete arrangement is reserved for `desktop:` at `80rem` (1280 px). We use explicit minimum-width names rather than inverse `max-*` variants so the breakpoint intent is visible in each component.
 
 ## Braille notation
 

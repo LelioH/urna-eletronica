@@ -124,16 +124,16 @@ export function VoteReview(props: VoteReviewProps) {
 
   return (
     <article className="flex h-full w-full flex-col">
-      <div className="flex h-full w-full flex-row justify-between p-review-content max-compact:justify-center max-compact:gap-4 max-compact:p-review-content-compact max-compact:text-center">
-        <div className="flex flex-col justify-evenly max-compact:justify-between">
-          <p className="text-ink text-lg max-compact:text-xs">
+      <div className="flex h-full w-full flex-row justify-center gap-4 p-review-content-compact text-center tablet:justify-between tablet:gap-0 tablet:p-review-content tablet:text-left">
+        <div className="flex flex-col justify-between tablet:justify-evenly">
+          <p className="text-ink text-xs tablet:text-lg">
             SEU VOTO PARA
           </p>
           <h2
-            className={`text-ink text-3xl max-compact:text-lg ${
+            className={`text-ink text-lg tablet:mt-0 tablet:text-3xl ${
               candidate
-                ? "max-compact:mt-review-title-candidate-offset-compact"
-                : "max-compact:mt-review-title-entry-offset-compact"
+                ? "mt-review-title-candidate-offset-compact"
+                : "mt-review-title-entry-offset-compact"
             }`}
           >
             {props.office.label}
@@ -144,14 +144,14 @@ export function VoteReview(props: VoteReviewProps) {
             onSubmit={(event) => event.preventDefault()}
           >
             <fieldset>
-              <legend className="text-ink text-lg max-compact:text-xs">
+              <legend className="text-ink text-xs tablet:text-lg">
                 NÚMERO:
               </legend>
               <p id="digit-instructions" className="sr-only">
                 Digite apenas números. Use Tab ou as setas para navegar entre os
                 campos e Backspace para apagar.
               </p>
-              <div className="flex flex-row gap-review-digits-gap max-compact:gap-review-digits-gap-compact">
+              <div className="flex flex-row gap-review-digits-gap-compact tablet:gap-review-digits-gap">
                 {Array.from({ length: props.office.digitCount }, (_, index) => (
                   <input
                     key={index}
@@ -171,7 +171,7 @@ export function VoteReview(props: VoteReviewProps) {
                     onChange={(event) => handleDigitChange(index, event)}
                     onKeyDown={(event) => handleDigitKeyDown(index, event)}
                     onPaste={(event) => handlePaste(index, event)}
-                    className="border-field-border text-ink flex h-review-digit-height w-review-digit-width items-center justify-center rounded-field border p-review-digit-padding text-2xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus-ring focus-visible:ring-offset-[length:var(--spacing-focus-offset)] focus-visible:ring-offset-focus-offset max-compact:h-review-digit-height-compact"
+                    className="border-field-border text-ink flex h-review-digit-height-compact w-review-digit-width items-center justify-center rounded-field border p-review-digit-padding text-2xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus-ring focus-visible:ring-offset-[length:var(--spacing-focus-offset)] focus-visible:ring-offset-focus-offset tablet:h-review-digit-height"
                   />
                 ))}
               </div>
@@ -179,17 +179,17 @@ export function VoteReview(props: VoteReviewProps) {
           </form>
           {candidate && (
             <div>
-              <p className="text-ink text-lg max-compact:text-xs">
+              <p className="text-ink text-xs tablet:text-lg">
                 NOME: {candidate.name}
               </p>
-              <p className="text-ink text-lg max-compact:text-xs">
+              <p className="text-ink text-xs tablet:text-lg">
                 PARTIDO: {candidate.party}
               </p>
             </div>
           )}
         </div>
         <div
-          className={`${!candidate ? "bg-photo-placeholder" : ""} h-review-photo-height w-review-photo-width max-compact:absolute max-compact:top-review-photo-offset-block-compact max-compact:right-review-photo-offset-inline-compact max-compact:h-review-photo-height-compact max-compact:w-review-photo-width-compact max-compact:p-0`}
+          className={`${!candidate ? "bg-photo-placeholder" : ""} absolute top-review-photo-offset-block-compact right-review-photo-offset-inline-compact h-review-photo-height-compact w-review-photo-width-compact p-0 tablet:static tablet:h-review-photo-height tablet:w-review-photo-width`}
         >
           {candidate && (
             <img
@@ -204,17 +204,17 @@ export function VoteReview(props: VoteReviewProps) {
       </div>
       {candidate && (
         <>
-          <hr className="border-rule mb-review-divider-bottom w-full border max-compact:mb-0 max-compact:hidden" />
-          <div className="flex w-full flex-row self-start gap-review-instructions-gap ps-review-instructions-inline max-compact:hidden">
-            <p className="text-ink text-lg max-compact:text-xs">
+          <hr className="border-rule mb-review-divider-bottom hidden w-full border desktop:block" />
+          <div className="hidden w-full flex-row self-start gap-review-instructions-gap ps-review-instructions-inline desktop:flex">
+            <p className="text-ink text-lg">
               APERTE A TECLA:
             </p>
             <div>
-              <p className="text-ink text-lg max-compact:text-xs">
+              <p className="text-ink text-lg">
                 Aperte <strong>CONFIRMA</strong> (tecla Enter ou C) para
                 confirmar este voto.
               </p>
-              <p className="text-ink text-lg max-compact:text-xs">
+              <p className="text-ink text-lg">
                 Aperte <strong>CORRIGE</strong> (Backspace, Escape ou R) para
                 reiniciar este voto.
               </p>

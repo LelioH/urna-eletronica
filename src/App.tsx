@@ -12,10 +12,10 @@ export default function Home() {
     <main className="flex min-h-svh" aria-label="Simulador de urna eletrônica">
       <h1 className="sr-only">Simulador de urna eletrônica</h1>
       <div
-        className="bg-machine-surface shadow-machine-inset m-auto flex flex-col rounded-machine py-machine-block ps-machine-inline-start pe-machine-inline-end max-compact:max-h-machine-height-compact max-compact:w-screen max-compact:py-machine-block-compact max-compact:ps-machine-inline-compact max-compact:pe-machine-inline-compact"
+        className="bg-machine-surface shadow-machine-inset flex w-screen flex-col rounded-machine py-machine-block-compact ps-machine-inline-compact pe-machine-inline-compact tablet:m-auto tablet:min-w-machine-width-tablet tablet:w-auto desktop:py-machine-block desktop:ps-machine-inline-start desktop:pe-machine-inline-end"
       >
         <div className="border-machine-border rounded-display border-2 border-b-0">
-          <div className="bg-display-bezel h-display-frame-height px-display-frame-inline py-display-frame-block max-compact:h-display-frame-height-compact max-compact:px-display-frame-inline-compact">
+          <div className="bg-display-bezel h-display-frame-height-compact px-display-frame-inline-compact py-display-frame-block tablet:h-display-frame-height-tablet tablet:px-display-frame-inline desktop:h-display-frame-height">
             <div className="bg-display-surface flex h-full w-full flex-col items-center">
               <VotingScreen
                 office={simulatorOffice}
@@ -25,8 +25,8 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className="flex flex-row gap-x-control-row-gap pt-control-row-before max-compact:flex-col max-compact:items-center max-compact:gap-y-control-row-gap-compact max-compact:pt-control-row-before-compact max-compact:-mb-control-row-overlap">
-            <div className="flex max-h-logo-height flex-wrap items-center max-compact:hidden">
+          <div className="-mb-control-row-overlap flex flex-col items-center gap-y-control-row-gap-compact pt-control-row-before-compact tablet:mb-0 tablet:flex-row tablet:items-stretch tablet:gap-x-control-row-gap tablet:gap-y-0 tablet:pt-control-row-before">
+            <div className="hidden max-h-logo-height flex-wrap items-center desktop:flex">
               <img src={TSH} width={209} height={132} alt="JH" />
             </div>
             <Keypad

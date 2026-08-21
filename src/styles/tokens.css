@@ -23,8 +23,9 @@
   --spacing-machine-inline-end: 5rem;
   --spacing-machine-inline-compact: 2rem;
   --spacing-machine-block-compact: 0rem;
-  --spacing-machine-height-compact: 41.875rem;
+  --spacing-machine-width-tablet: 45rem;
   --spacing-display-frame-height: 27.25rem;
+  --spacing-display-frame-height-tablet: 24rem;
   --spacing-display-frame-height-compact: 21rem;
   --spacing-display-frame-block: 1rem;
   --spacing-display-frame-inline: 2rem;
@@ -37,9 +38,11 @@
   --spacing-logo-height: 14rem;
   --spacing-action-panel-block: 0.75rem;
   --spacing-action-panel-inline: 2.25rem;
+  --spacing-action-panel-inline-compact: 0.5rem;
   --spacing-action-panel-gap: 1rem;
   --spacing-action-panel-gap-compact: 0.5rem;
   --spacing-action-panel-bottom: 6rem;
+  --spacing-action-panel-bottom-tablet: 1rem;
   --spacing-action-panel-bottom-compact: 1rem;
   --spacing-action-width: 6rem;
   --spacing-action-width-compact: 5.25rem;
@@ -102,7 +105,8 @@
   --shadow-action-correct: 0 0.1875rem 0 rgb(185 28 28);
   --shadow-action-confirm: 0 0.1875rem 0 rgb(21 128 61);
 
-  --breakpoint-compact: 40rem;
+  --breakpoint-tablet: 48rem;
+  --breakpoint-desktop: 80rem;
 }
 
 @layer base {
