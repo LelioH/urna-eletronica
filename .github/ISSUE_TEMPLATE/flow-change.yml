@@ -1,0 +1,43 @@
+name: Voting-flow change
+description: Propose a change to voting states, actions, or review behavior.
+labels: [flow]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Flow changes require Code Owner review, behavior tests, and accessibility review. Do not include
+        real vote preferences or personal data.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Current and desired behavior
+      description: Describe the state transition and user-visible result.
+    validations:
+      required: true
+  - type: textarea
+    id: states
+    attributes:
+      label: States and events affected
+      placeholder: typing -> candidate-review after ...
+    validations:
+      required: true
+  - type: textarea
+    id: accessibility
+    attributes:
+      label: Keyboard, focus, and announcement impact
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Required test coverage
+      description: Include reducer, interface, and E2E behavior as applicable.
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy confirmation
+      options:
+        - label: This proposal contains no vote preferences, identifiers, or personal data.
+          required: true

@@ -1,0 +1,7 @@
+node_modules
+docs
+dist
+coverage
+playwright-report
+test-results
+blob-report

@@ -1,210 +1,77 @@
-import React, { useEffect, useState } from "react";
-import Lara from "./assets/lara-urna.jpg";
-import TSH from "./assets/jh-logo.png";
-import { IsentVote } from "./components/IsentVote";
-import { EndVote } from "./components/EndVote";
-import { WrongVote } from "./components/WrongVote";
-import { ActionButtons } from "./components/ActionButtons";
-import DialerBtn from "./components/DialerButton";
+import { ActionPanel } from "./components/ActionPanel";
+import { Keypad } from "./components/Keypad";
+import { VotingScreen } from "./components/VotingScreen";
+import { simulatorOffice } from "./domain/election";
+import { useVotingMachine } from "./hooks/useVotingMachine";
 
 export default function Home() {
-  const numbers = [
-    { value: 1, braile: "⠃" },
-    { value: 2, braile: "⠉" },
-    { value: 3, braile: "⠙" },
-    { value: 4, braile: "⠑" },
-    { value: 5, braile: "⠋" },
-    { value: 6, braile: "⠛" },
-    { value: 7, braile: "⠓" },
-    { value: 8, braile: "⠊" },
-    { value: 9, braile: "⠚" },
-    { value: 0, braile: "⠁" },
-  ];
-
-  const [inputValues, setInputValues] = useState<number[]>([]);
-  const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
-  const [isentVote, setIsentVote] = useState<boolean>(false);
-  const confirmSound = new Audio("./confirma-urna.mp3");
-
-  const renderInputs = () => {
-    const inputs = [];
-    for (let i = 0; i < 5; i++) {
-      inputs.push(
-        <React.Fragment key={i}>
-          <input
-            type="text"
-            maxLength={1}
-            onChange={() => {}}
-            value={inputValues[i] ?? ""}
-            className="border-black text-black flex justify-center items-center border w-12 h-14 rounded-md text-2xl font-inter p-3 sm:h-10"
-          />
-        </React.Fragment>
-      );
-    }
-    return inputs;
-  };
-
-  const handleDialerClick = (value: number) => {
-    const counselorArray = [...inputValues];
-    if (counselorArray.length < 5) {
-      counselorArray.push(value);
-      setInputValues(counselorArray);
-    }
-  };
-
-  const isentVoteFnc = () => {
-    setIsentVote(true);
-  };
-
-  const emptyInput = () => {
-    setInputValues([]);
-    setIsentVote(false);
-  };
-
-  const confirmVote = () => {
-    setIsConfirmed(true);
-    console.log(confirmSound);
-    confirmSound.play();
-  };
-
-  const prepareNewVote = () => {
-    setIsConfirmed(false);
-    confirmSound.currentTime = 0;
-    setIsentVote(false);
-    emptyInput();
-  };
-
-  useEffect(() => {
-    if (isConfirmed) {
-      setTimeout(() => {
-        prepareNewVote();
-      }, 3000);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isConfirmed]);
+  const votingMachine = useVotingMachine();
 
   return (
-    <div className="flex h-svh-100">
-      <div
-        className="bg-gray-300 flex flex-col m-auto rounded-xl py-2 pl-16 pr-20 sm:max-h-[670px] sm:pl-8 sm:pr-10 sm:w-screen sm:py-0"
-        style={{
-          boxShadow: "-32px -8px 3px 1px rgba(107, 114, 128, 0.5) inset",
-        }}
-      >
-        <div className="border-gray-400 border-2 border-b-0 rounded-sm">
-          <div className="bg-black h-[436px] px-8 py-4 sm:px-4 sm:h-[336px]">
-            <div className="bg-slate-100 w-full h-full flex flex-col items-center">
-              {isentVote ? (
-                <IsentVote />
-              ) : isConfirmed ? (
-                <EndVote />
-              ) : inputValues.map((num) => Math.floor(num)).join("") !==
-                  "12000" && inputValues.length === 5 ? (
-                <WrongVote />
-              ) : (
-                <React.Fragment>
-                  <div className="flex flex-row w-full h-full justify-between p-2 sm:gap-4 sm:text-center sm:justify-center sm:p-1">
-                    <div className="flex flex-col justify-evenly sm:justify-between">
-                      <h1 className="text-black text-lg font-inter sm:text-xs">
-                        SEU VOTO PARA
-                      </h1>
-                      <h1
-                        className={`text-black text-3xl font-inter sm:text-lg ${
-                          inputValues.length === 5
-                            ? "sm:mt-[160px]"
-                            : "sm:mt-[180px]"
-                        }`}
-                      >
-                        VEREADORA
-                      </h1>
-                      <div>
-                        <label className="text-black text-lg font-inter sm:text-xs">
-                          NÚMERO:
-                        </label>
-                        <div className="flex flex-row gap-2 sm:gap-1">
-                          {renderInputs()}
-                        </div>
-                      </div>
-                      {inputValues && inputValues.length === 5 && (
-                        <React.Fragment>
-                          <div>
-                            <h1 className="text-black text-lg font-inter sm:text-xs">
-                              NOME: LARA OLIVEIRA
-                            </h1>
-                            <h1 className="text-black text-lg font-inter sm:text-xs">
-                              PARTIDO: PDT
-                            </h1>
-                          </div>
-                        </React.Fragment>
-                      )}
-                    </div>
-                    <div
-                      className={`${
-                        inputValues.length !== 5 && "bg-slate-50"
-                      } bg-opacity-90 w-[200px] h-[240px] sm:absolute sm:top-[45px] sm:right-[135px] sm:w-[130px] sm:h-[150px] sm:p-0`}
-                    >
-                      {inputValues && inputValues.length === 5 && (
-                        <img
-                          src={Lara}
-                          width={200}
-                          height={240}
-                          alt="Lara Carvalho"
-                          style={{
-                            objectFit: "contain",
-                            maxWidth: "100%",
-                            maxHeight: "100%",
-                          }}
-                        />
-                      )}
-                    </div>
-                  </div>
-                  {inputValues && inputValues.length === 5 && (
-                    <React.Fragment>
-                      <hr className="border border-black w-full mb-1 sm:mb-0 sm:hidden" />
-                      <div className="flex flex-row gap-3 self-start w-full pl-2 sm:text-center sm:p-1 sm:hidden">
-                        <h1 className="text-black text-lg font-inter sm:text-xs">
-                          APERTE A TECLA:
-                        </h1>
-                        <div>
-                          <h1 className="text-black text-lg font-inter sm:text-xs">
-                            <span className="text-green-500">VERDE</span> para
-                            CONFIRMAR este voto
-                          </h1>
-                          <h1 className="text-black text-lg font-inter sm:text-xs">
-                            <span className="text-red-500">VERMELHO</span> para
-                            REINICIAR este voto
-                          </h1>
-                        </div>
-                      </div>
-                    </React.Fragment>
-                  )}
-                </React.Fragment>
-              )}
+    <main className="urna-experience" aria-label="Simulador independente de urna eletrônica">
+      <div className="urna-experience__glow" aria-hidden="true" />
+      <div className="urna-layout">
+        <header className="experience-header">
+          <div className="experience-header__eyebrow">
+            <span className="status-dot" aria-hidden="true" />
+            Projeto educacional independente
+          </div>
+          <h1>Entenda o fluxo de uma urna eletrônica.</h1>
+          <p>
+            Uma demonstração interativa construída para orientar cada etapa da experiência de
+            votação com clareza.
+          </p>
+        </header>
+
+        <article className="urna-machine" aria-label="Urna eletrônica">
+          <div className="urna-machine__topline" aria-hidden="true" />
+          <div className="display-frame">
+            <div className="display-frame__label">
+              <span>SIMULADOR DE VOTAÇÃO</span>
+              <span className="display-frame__indicator">MODO DEMONSTRAÇÃO</span>
+            </div>
+            <div className="display-frame__bezel">
+              <VotingScreen
+                office={simulatorOffice}
+                screen={votingMachine.screen}
+                liveAnnouncement={votingMachine.liveAnnouncement}
+                onDigitsChange={votingMachine.changeDigits}
+              />
             </div>
           </div>
-          <div className="flex flex-row pt-24 gap-x-5 sm:flex-col sm:items-center sm:gap-y-1 sm:pt-1 sm:mb-[-8px]">
-            <div className="flex flex-wrap items-center max-h-[224px] sm:hidden">
-              <img src={TSH} width={209} height={132} alt="JH" />
+
+          <div className="control-deck">
+            <div className="control-deck__brand" aria-label="Identificação do simulador">
+              <span className="control-deck__mark" aria-hidden="true">
+                SE
+              </span>
+              <p>
+                SIMULADOR
+                <br />
+                EDUCACIONAL
+              </p>
             </div>
-            <div className="max-w-[270px] max-h-[224px] flex flex-wrap flex-row items-center justify-center gap-x-3 gap-y-3 p-2 sm:w-full sm:p-0">
-              {numbers.map((number, index) => (
-                <DialerBtn
-                  key={index}
-                  value={number.value}
-                  braile={number.braile}
-                  handleClick={() => handleDialerClick(number.value)}
-                />
-              ))}
-            </div>
-            <ActionButtons
-              inputValues={inputValues}
-              isentVoteFnc={isentVoteFnc}
-              emptyInput={emptyInput}
-              confirmVote={confirmVote}
+            <Keypad disabled={!votingMachine.canEnterDigits} onDigit={votingMachine.enterDigit} />
+            <ActionPanel
+              blankDisabled={!votingMachine.canStartBlankVote}
+              correctDisabled={!votingMachine.canCorrect}
+              confirmDisabled={!votingMachine.canConfirm}
+              onBlank={votingMachine.startBlankVote}
+              onCorrect={votingMachine.correctVote}
+              onConfirm={votingMachine.confirmVote}
             />
           </div>
-        </div>
+        </article>
+
+        <aside className="experience-note" aria-label="Informação sobre o simulador">
+          <span aria-hidden="true">✦</span>
+          <p>
+            Projeto independente e não oficial. Não é afiliado, aprovado nem operado pelo Tribunal
+            Superior Eleitoral (TSE), pela Justiça Eleitoral ou por tribunais regionais eleitorais.
+            Nenhum voto é armazenado.
+          </p>
+        </aside>
       </div>
-    </div>
+    </main>
   );
 }
