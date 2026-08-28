@@ -10,6 +10,12 @@ async function enterNumber(user: ReturnType<typeof userEvent.setup>, number: str
 }
 
 describe("voting interface", () => {
+  it("identifies the experience as an independent, unofficial simulator", () => {
+    render(<App />);
+
+    expect(screen.getByText(/Projeto independente e não oficial/)).toBeInTheDocument();
+  });
+
   it("lets a voter review and confirm a recognized candidate", async () => {
     const user = userEvent.setup();
     render(<App />);
@@ -21,7 +27,7 @@ describe("voting interface", () => {
 
     await user.click(screen.getByRole("button", { name: "Confirmar voto" }));
 
-    expect(screen.getByRole("img", { name: "Voto concluído" })).toBeInTheDocument();
+    expect(screen.getByText("VOTO CONFIRMADO")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Confirmar voto" })).toBeDisabled();
   });
 

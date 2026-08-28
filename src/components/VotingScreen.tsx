@@ -46,19 +46,31 @@ export function VotingScreen({
       content = <BlankVote />;
       break;
     case "invalid":
-      content = <InvalidVote />;
+      content = <InvalidVote digits={screen.digits} />;
       break;
     case "completed":
       content = <VoteResult />;
       break;
   }
 
+  const status = {
+    entry: { label: "PREENCHA SEU VOTO", detail: "ETAPA 1 DE 2" },
+    "candidate-review": { label: "CONFIRA OS DADOS", detail: "ETAPA 2 DE 2" },
+    "blank-review": { label: "CONFIRME SUA ESCOLHA", detail: "REVISÃO" },
+    invalid: { label: "REVISE O NÚMERO", detail: "AÇÃO NECESSÁRIA" },
+    completed: { label: "PROCESSO CONCLUÍDO", detail: "PRONTO" },
+  }[screen.view];
+
   return (
-    <section aria-label="Tela da urna" className="w-full h-full flex flex-col items-center">
+    <section aria-label="Tela da urna" className={`voting-screen voting-screen--${screen.view}`}>
       <p className="sr-only" aria-live="polite" aria-atomic="true">
         {liveAnnouncement}
       </p>
-      {content}
+      <header className="voting-screen__status" aria-hidden="true">
+        <span>{status.label}</span>
+        <span>{status.detail}</span>
+      </header>
+      <div className="voting-screen__content">{content}</div>
     </section>
   );
 }

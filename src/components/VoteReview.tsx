@@ -107,31 +107,24 @@ export function VoteReview(props: VoteReviewProps) {
   };
 
   return (
-    <article className="flex h-full w-full flex-col">
-      <div className="flex h-full w-full flex-row justify-center gap-4 p-review-content-compact text-center tablet:justify-between tablet:gap-0 tablet:p-review-content tablet:text-left">
-        <div className="flex flex-col justify-between tablet:justify-evenly">
-          <p className="text-ink text-xs tablet:text-lg">SEU VOTO PARA</p>
-          <h2
-            className={`text-ink text-lg tablet:mt-0 tablet:text-3xl ${
-              candidate
-                ? "mt-review-title-candidate-offset-compact"
-                : "mt-review-title-entry-offset-compact"
-            }`}
-          >
-            {props.office.label}
-          </h2>
+    <article className={`vote-review ${candidate ? "vote-review--candidate" : ""}`}>
+      <div className="vote-review__main">
+        <div className="vote-review__information">
+          <p className="vote-review__eyebrow">SEU VOTO PARA</p>
+          <h2>{props.office.label}</h2>
+
           <form
             aria-label="Número do candidato"
             noValidate
             onSubmit={(event) => event.preventDefault()}
           >
-            <fieldset>
-              <legend className="text-ink text-xs tablet:text-lg">NÚMERO:</legend>
+            <fieldset className="digit-fieldset">
+              <legend>NÚMERO</legend>
               <p id="digit-instructions" className="sr-only">
                 Digite apenas números. Use Tab ou as setas para navegar entre os campos e Backspace
                 para apagar.
               </p>
-              <div className="flex flex-row gap-review-digits-gap-compact tablet:gap-review-digits-gap">
+              <div className="digit-fields">
                 {Array.from({ length: props.office.digitCount }, (_, index) => (
                   <input
                     key={index}
@@ -151,49 +144,57 @@ export function VoteReview(props: VoteReviewProps) {
                     onChange={(event) => handleDigitChange(index, event)}
                     onKeyDown={(event) => handleDigitKeyDown(index, event)}
                     onPaste={(event) => handlePaste(index, event)}
-                    className="border-field-border text-ink flex h-review-digit-height-compact w-review-digit-width items-center justify-center rounded-field border p-review-digit-padding text-2xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus-ring focus-visible:ring-offset-[length:var(--spacing-focus-offset)] focus-visible:ring-offset-focus-offset tablet:h-review-digit-height"
+                    className="digit-field"
                   />
                 ))}
               </div>
             </fieldset>
           </form>
-          {candidate && (
-            <div>
-              <p className="text-ink text-xs tablet:text-lg">NOME: {candidate.name}</p>
-              <p className="text-ink text-xs tablet:text-lg">PARTIDO: {candidate.party}</p>
+
+          {candidate ? (
+            <div className="candidate-details">
+              <p>NOME: {candidate.name}</p>
+              <p>PARTIDO: {candidate.party}</p>
             </div>
+          ) : (
+            <p className="vote-review__hint">
+              Digite os {props.office.digitCount} números no teclado para visualizar a candidatura.
+            </p>
           )}
         </div>
-        <div
-          className={`${!candidate ? "bg-photo-placeholder" : ""} absolute top-review-photo-offset-block-compact right-review-photo-offset-inline-compact h-review-photo-height-compact w-review-photo-width-compact p-0 tablet:static tablet:h-review-photo-height tablet:w-review-photo-width`}
-        >
-          {candidate && (
-            <img
-              src={candidate.photoSrc}
-              width={200}
-              height={240}
-              alt={candidate.photoAlt}
-              className="max-h-full max-w-full object-contain"
-            />
+
+        <div className={`candidate-preview ${candidate ? "candidate-preview--ready" : ""}`}>
+          {candidate ? (
+            <>
+              <img src={candidate.photoSrc} width={200} height={240} alt={candidate.photoAlt} />
+              <span className="candidate-preview__verified">DADOS PARA CONFERÊNCIA</span>
+            </>
+          ) : (
+            <div className="candidate-preview__empty" aria-hidden="true">
+              <span>?</span>
+              <p>
+                AGUARDANDO
+                <br />
+                NÚMERO
+              </p>
+            </div>
           )}
         </div>
       </div>
-      {candidate && (
-        <>
-          <hr className="border-rule mb-review-divider-bottom hidden w-full border desktop:block" />
-          <div className="hidden w-full flex-row self-start gap-review-instructions-gap ps-review-instructions-inline desktop:flex">
-            <p className="text-ink text-lg">APERTE A TECLA:</p>
-            <div>
-              <p className="text-ink text-lg">
-                Aperte <strong>CONFIRMA</strong> (tecla Enter ou C) para confirmar este voto.
-              </p>
-              <p className="text-ink text-lg">
-                Aperte <strong>CORRIGE</strong> (Backspace, Escape ou R) para reiniciar este voto.
-              </p>
-            </div>
-          </div>
-        </>
-      )}
+
+      <footer className="vote-review__footer">
+        {candidate ? (
+          <p>
+            Confira os dados. Pressione <strong>CONFIRMA</strong> para avançar ou{" "}
+            <strong>CORRIGE</strong> para reiniciar.
+          </p>
+        ) : (
+          <p>
+            Para voto em branco, pressione <strong>BRANCO</strong>. Para apagar tudo, pressione{" "}
+            <strong>CORRIGE</strong>.
+          </p>
+        )}
+      </footer>
     </article>
   );
 }

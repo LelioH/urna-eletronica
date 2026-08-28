@@ -1,4 +1,3 @@
-import TSH from "./assets/jh-logo.png";
 import { ActionPanel } from "./components/ActionPanel";
 import { Keypad } from "./components/Keypad";
 import { VotingScreen } from "./components/VotingScreen";
@@ -9,12 +8,29 @@ export default function Home() {
   const votingMachine = useVotingMachine();
 
   return (
-    <main className="flex min-h-svh" aria-label="Simulador de urna eletrônica">
-      <h1 className="sr-only">Simulador de urna eletrônica</h1>
-      <div className="bg-machine-surface shadow-machine-inset flex w-screen flex-col rounded-machine py-machine-block-compact ps-machine-inline-compact pe-machine-inline-compact tablet:m-auto tablet:min-w-machine-width-tablet tablet:w-auto desktop:py-machine-block desktop:ps-machine-inline-start desktop:pe-machine-inline-end">
-        <div className="border-machine-border rounded-display border-2 border-b-0">
-          <div className="bg-display-bezel h-display-frame-height-compact px-display-frame-inline-compact py-display-frame-block tablet:h-display-frame-height-tablet tablet:px-display-frame-inline desktop:h-display-frame-height">
-            <div className="bg-display-surface flex h-full w-full flex-col items-center">
+    <main className="urna-experience" aria-label="Simulador independente de urna eletrônica">
+      <div className="urna-experience__glow" aria-hidden="true" />
+      <div className="urna-layout">
+        <header className="experience-header">
+          <div className="experience-header__eyebrow">
+            <span className="status-dot" aria-hidden="true" />
+            Projeto educacional independente
+          </div>
+          <h1>Entenda o fluxo de uma urna eletrônica.</h1>
+          <p>
+            Uma demonstração interativa construída para orientar cada etapa da experiência de
+            votação com clareza.
+          </p>
+        </header>
+
+        <article className="urna-machine" aria-label="Urna eletrônica">
+          <div className="urna-machine__topline" aria-hidden="true" />
+          <div className="display-frame">
+            <div className="display-frame__label">
+              <span>SIMULADOR DE VOTAÇÃO</span>
+              <span className="display-frame__indicator">MODO DEMONSTRAÇÃO</span>
+            </div>
+            <div className="display-frame__bezel">
               <VotingScreen
                 office={simulatorOffice}
                 screen={votingMachine.screen}
@@ -23,9 +39,17 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className="-mb-control-row-overlap flex flex-col items-center gap-y-control-row-gap-compact pt-control-row-before-compact tablet:mb-0 tablet:flex-row tablet:items-stretch tablet:gap-x-control-row-gap tablet:gap-y-0 tablet:pt-control-row-before">
-            <div className="hidden max-h-logo-height flex-wrap items-center desktop:flex">
-              <img src={TSH} width={209} height={132} alt="JH" />
+
+          <div className="control-deck">
+            <div className="control-deck__brand" aria-label="Identificação do simulador">
+              <span className="control-deck__mark" aria-hidden="true">
+                SE
+              </span>
+              <p>
+                SIMULADOR
+                <br />
+                EDUCACIONAL
+              </p>
             </div>
             <Keypad disabled={!votingMachine.canEnterDigits} onDigit={votingMachine.enterDigit} />
             <ActionPanel
@@ -37,7 +61,16 @@ export default function Home() {
               onConfirm={votingMachine.confirmVote}
             />
           </div>
-        </div>
+        </article>
+
+        <aside className="experience-note" aria-label="Informação sobre o simulador">
+          <span aria-hidden="true">✦</span>
+          <p>
+            Projeto independente e não oficial. Não é afiliado, aprovado nem operado pelo Tribunal
+            Superior Eleitoral (TSE), pela Justiça Eleitoral ou por tribunais regionais eleitorais.
+            Nenhum voto é armazenado.
+          </p>
+        </aside>
       </div>
     </main>
   );

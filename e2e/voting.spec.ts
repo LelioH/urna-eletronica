@@ -19,7 +19,7 @@ test.describe("voting flows", () => {
 
     await page.getByRole("button", { name: "Confirmar voto" }).click();
 
-    await expect(page.getByRole("img", { name: "Voto concluído" })).toBeVisible();
+    await expect(page.getByText("VOTO CONFIRMADO")).toBeVisible();
     await expect(page.getByRole("button", { name: "Confirmar voto" })).toBeDisabled();
   });
 
@@ -42,6 +42,6 @@ test.describe("voting flows", () => {
 
     await page.getByRole("button", { name: "Confirmar voto" }).click();
 
-    await expect(page.getByRole("img", { name: "Voto concluído" })).toBeVisible();
+    await expect(page.getByText("VOTO CONFIRMADO")).toBeVisible();
   });
 });

@@ -1,4 +1,4 @@
-import Lara from "../assets/lara-urna.jpg";
+import { simulatorCandidates } from "../data/candidates";
 
 export type Office<TId extends string = string> = {
   readonly id: TId;
@@ -14,6 +14,7 @@ export type Candidate<TOfficeId extends string = string> = {
   readonly party: string;
   readonly photoSrc: string;
   readonly photoAlt: string;
+  readonly confirmationSound?: "candidate-jingle";
 };
 
 export type Election<TOfficeId extends string = string> = {
@@ -31,17 +32,7 @@ export const simulatorOffice = {
 export const simulatorElection = {
   id: "urna-demo",
   offices: [simulatorOffice],
-  candidates: [
-    {
-      id: "lara-oliveira",
-      officeId: simulatorOffice.id,
-      number: "12000",
-      name: "LARA OLIVEIRA",
-      party: "PDT",
-      photoSrc: Lara,
-      photoAlt: "Lara Oliveira",
-    },
-  ],
+  candidates: simulatorCandidates,
 } as const satisfies Election<typeof simulatorOffice.id>;
 
 export function findCandidate<TOfficeId extends string>(

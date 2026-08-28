@@ -1,15 +1,15 @@
-import CorrectEnding from "../assets/correct-ending.png";
-
 export function VoteResult() {
   return (
-    <article aria-label="Voto concluído" className="flex h-full w-full items-center justify-center">
-      <img
-        src={CorrectEnding}
-        width={580}
-        height={380}
-        className="max-h-full max-w-full object-contain"
-        alt="Voto concluído"
-      />
+    <article aria-label="Voto concluído" className="state-message state-message--completed">
+      <div className="confirmation-seal" aria-hidden="true">
+        <span>✓</span>
+      </div>
+      <div>
+        <p className="state-message__eyebrow">CONFIRMAÇÃO CONCLUÍDA</p>
+        <h2>VOTO CONFIRMADO</h2>
+        <p className="state-message__lead">Obrigado por participar deste simulador.</p>
+        <p className="state-message__instruction">A urna será preparada para a próxima pessoa.</p>
+      </div>
     </article>
   );
 }

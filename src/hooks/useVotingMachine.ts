@@ -7,7 +7,7 @@ export type VotingScreenModel =
   | { view: "entry"; digits: string }
   | { view: "candidate-review"; digits: string; candidate: Candidate }
   | { view: "blank-review" }
-  | { view: "invalid" }
+  | { view: "invalid"; digits: string }
   | { view: "completed" };
 
 function isEditableTarget(target: EventTarget | null) {
@@ -24,10 +24,47 @@ function reportAudioFailure() {
   reportPublicDemoError("confirmation-audio-unavailable");
 }
 
-function playConfirmationSound(audio: HTMLAudioElement) {
+function playCandidateJingle(audio: HTMLAudioElement) {
   try {
     const playback = audio.play();
     void playback.catch(reportAudioFailure);
+  } catch {
+    reportAudioFailure();
+  }
+}
+
+function playGenericConfirmationTone() {
+  const audioContextConstructor = window.AudioContext;
+
+  if (!audioContextConstructor) {
+    reportAudioFailure();
+    return;
+  }
+
+  try {
+    const audioContext = new audioContextConstructor();
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    const start = audioContext.currentTime;
+
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(880, start);
+    oscillator.frequency.setValueAtTime(1_046, start + 0.13);
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(0.11, start + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.08);
+    gain.gain.setValueAtTime(0.0001, start + 0.13);
+    gain.gain.exponentialRampToValueAtTime(0.11, start + 0.14);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.22);
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    oscillator.addEventListener("ended", () => {
+      void audioContext.close().catch(reportAudioFailure);
+    });
+    oscillator.start(start);
+    oscillator.stop(start + 0.23);
+    void audioContext.resume().catch(reportAudioFailure);
   } catch {
     reportAudioFailure();
   }
@@ -46,7 +83,7 @@ function createScreenModel(state: VoteState): VotingScreenModel {
     case "blank-review":
       return { view: "blank-review" };
     case "invalid":
-      return { view: "invalid" };
+      return { view: "invalid", digits: state.digits };
     case "finalizing":
     case "completed":
       return { view: "completed" };
@@ -97,6 +134,10 @@ export function useVotingMachine() {
   const finalizationTimer = useRef<number | null>(null);
   const resetTimer = useRef<number | null>(null);
   const previousVoteState = useRef<VoteState | null>(null);
+  const confirmationSound =
+    voteState.phase === "finalizing" || voteState.phase === "completed"
+      ? voteState.confirmationSound
+      : null;
 
   useEffect(() => {
     const announcement = createLiveAnnouncement(previousVoteState.current, voteState);
@@ -122,10 +163,14 @@ export function useVotingMachine() {
   useEffect(() => {
     if (voteState.phase !== "finalizing") return;
 
-    const audio = confirmSound.current;
-    if (audio) {
-      audio.currentTime = 0;
-      playConfirmationSound(audio);
+    if (confirmationSound === "candidate-jingle") {
+      const audio = confirmSound.current;
+      if (audio) {
+        audio.currentTime = 0;
+        playCandidateJingle(audio);
+      }
+    } else {
+      playGenericConfirmationTone();
     }
 
     finalizationTimer.current = window.setTimeout(() => {
@@ -138,7 +183,7 @@ export function useVotingMachine() {
         finalizationTimer.current = null;
       }
     };
-  }, [voteState.phase]);
+  }, [confirmationSound, voteState.phase]);
 
   useEffect(() => {
     if (voteState.phase !== "completed") return;

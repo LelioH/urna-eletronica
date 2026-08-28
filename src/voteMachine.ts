@@ -6,14 +6,15 @@ import {
 } from "./domain/election";
 
 export type VoteKind = "candidate" | "blank";
+export type ConfirmationSound = "candidate-jingle" | "generic";
 
 export type VoteState =
   | { phase: "typing"; digits: string }
   | { phase: "candidate-review"; digits: string; candidate: Candidate }
   | { phase: "invalid"; digits: string }
   | { phase: "blank-review" }
-  | { phase: "finalizing"; kind: VoteKind }
-  | { phase: "completed"; kind: VoteKind };
+  | { phase: "finalizing"; kind: VoteKind; confirmationSound: ConfirmationSound }
+  | { phase: "completed"; kind: VoteKind; confirmationSound: ConfirmationSound };
 
 export type VoteEvent =
   | { type: "DIGIT_PRESSED"; digit: string }
@@ -76,17 +77,27 @@ export function voteReducer(state: VoteState, event: VoteEvent): VoteState {
 
     case "CONFIRM_PRESSED":
       if (state.phase === "candidate-review") {
-        return { phase: "finalizing", kind: "candidate" };
+        return {
+          phase: "finalizing",
+          kind: "candidate",
+          confirmationSound: state.candidate.confirmationSound ?? "generic",
+        };
       }
 
       if (state.phase === "blank-review") {
-        return { phase: "finalizing", kind: "blank" };
+        return { phase: "finalizing", kind: "blank", confirmationSound: "generic" };
       }
 
       return state;
 
     case "FINALIZATION_COMPLETED":
-      return state.phase === "finalizing" ? { phase: "completed", kind: state.kind } : state;
+      return state.phase === "finalizing"
+        ? {
+            phase: "completed",
+            kind: state.kind,
+            confirmationSound: state.confirmationSound,
+          }
+        : state;
 
     case "RESET":
       return state.phase === "completed" ? initialVoteState : state;

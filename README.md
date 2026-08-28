@@ -7,11 +7,13 @@ The interface recreates the physical rhythm of voting: enter a number on the key
 ## What is inside
 
 - A responsive ballot-box layout that works on desktop and mobile screens
-- Numeric keypad with braille labels and direct keyboard entry
+- Numeric keypad with direct keyboard entry
 - Candidate preview after five digits are entered
 - Blank vote, correction, confirmation, and invalid-vote states
 - Confirmation sound and automatic reset after a completed vote
 - A focused component structure built with React and TypeScript
+
+Candidate registrations live in `src/data/candidates.ts`. Add a new object to `simulatorCandidates` with its number, name, party, photo, and office ID to make it available in the simulator.
 
 ## Try the demo flow
 
@@ -35,10 +37,6 @@ Entering any other five-digit number displays an invalid-vote state and disables
 ## Responsive strategy
 
 The interface follows Tailwind's mobile-first model. Its base styles target compact screens, including 320 px wide viewports. The named `tablet:` breakpoint starts at `48rem` (768 px) and uses a wider layout without the logo or excess control spacing. The complete arrangement is reserved for `desktop:` at `80rem` (1280 px). We use explicit minimum-width names rather than inverse `max-*` variants so the breakpoint intent is visible in each component.
-
-## Braille notation
-
-The keypad shows isolated numeric symbols according to the Brazilian Portuguese Braille convention: the number sign followed by the first-series cell. The table in `src/domain/braille.ts` was checked against the Brazilian Ministry of Education's _Grafia Braille para a Língua Portuguesa_. A qualified braille reviewer should also approve any tactile or production hardware implementation.
 
 ## Getting started
 
@@ -183,7 +181,7 @@ src/
 
 ## Note
 
-This is an educational UI simulation, not a voting system. It has no ballot storage, authentication, backend, or connection to an official election process.
+This is an independent, unofficial educational UI simulation, not a voting system. It has no ballot storage, authentication, backend, or connection to an official election process. It is not affiliated with, approved by, or operated by the Tribunal Superior Eleitoral (TSE), the Justiça Eleitoral, or any regional electoral court.
 
 ## Governance
 
